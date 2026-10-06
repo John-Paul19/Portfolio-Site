@@ -173,6 +173,300 @@ a:hover {
   }
 }
 
+/* ===== Hero ===== */
+.hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  min-height: calc(100vh - 4.25rem);   /* full screen minus the navbar */
+  min-height: calc(100svh - 4.25rem);
+  padding: 6rem 0;
+  overflow: hidden;
+  color: #fff;
+  background:
+    radial-gradient(ellipse at 80% 15%, rgba(255, 255, 255, 0.14), transparent 55%),
+    linear-gradient(135deg, var(--green) 0%, var(--green-dark) 55%, #004a2c 100%);
+}
+
+/* Carbon-fibre weave laid over the green */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: rgba(0, 0, 0, 0.2);
+  background-image:
+    linear-gradient(45deg, rgba(255, 255, 255, 0.07) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.07) 75%),
+    linear-gradient(45deg, rgba(255, 255, 255, 0.07) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.07) 75%),
+    linear-gradient(135deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0) 50%);
+  background-size: 8px 8px;
+  background-position: 0 0, 4px 4px, 0 0;
+}
+
+/* Darker edges so the middle stands out */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(ellipse at center, transparent 45%, rgba(0, 0, 0, 0.3) 100%);
+}
+
+.hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.hero-eyebrow::before {
+  content: "";
+  width: 2.5rem;
+  height: 2px;
+  background-color: #fff;
+}
+
+/* Name in the logo's AMG style: wide, heavy, slanted */
+.hero-name {
+  margin-bottom: 1rem;
+  color: #fff;
+  font-family: "Archivo", var(--font-heading);
+  font-style: italic;
+  font-stretch: 125%;
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+}
+
+.hero-name span {
+  display: block;
+}
+
+.hero-name-first {
+  font-size: clamp(1.1rem, 2.6vw, 1.9rem);
+}
+
+/* "John-Paul" in green-white-green chrome, like the logo */
+.hero-name-main {
+  width: fit-content;
+  font-size: clamp(2.4rem, 6.2vw, 4.75rem);
+  letter-spacing: -0.01em;
+  background-image:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.15)),
+    linear-gradient(90deg, #7be0b0 10%, #ffffff 50%, #7be0b0 90%);   /* lighter green so it shows on the green hero */
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 0.5px var(--charcoal)) drop-shadow(2px 2px 0 var(--charcoal));
+}
+
+.hero-typed {
+  min-height: 1.5em;   /* keeps the layout still while lines type and delete */
+  margin-bottom: 1.25rem;
+  font-family: var(--font-heading);
+  font-size: clamp(1rem, 4.6vw, 1.75rem);   /* small enough that the loadout line fits on one line on small phones */
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.typed-cursor {
+  display: inline-block;
+  width: 3px;
+  height: 1.1em;
+  margin-left: 4px;
+  vertical-align: -0.15em;
+  background-color: #fff;
+  animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.hero-intro {
+  max-width: 34rem;
+  margin-bottom: 2.25rem;
+  font-size: 1.1rem;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.hero-actions .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  --bs-btn-padding-x: 1.75rem;
+  --bs-btn-padding-y: 0.8rem;
+  --bs-btn-border-width: 2px;
+  --bs-btn-border-radius: 2px;
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* "Press Start" button: white with a pulsing glow */
+.btn-start {
+  --bs-btn-color: var(--green-dark);
+  --bs-btn-bg: #fff;
+  --bs-btn-border-color: #fff;
+  --bs-btn-hover-color: var(--green-dark);
+  --bs-btn-hover-bg: var(--green-light);
+  --bs-btn-hover-border-color: var(--green-light);
+  --bs-btn-active-color: var(--green-dark);
+  --bs-btn-active-bg: var(--green-light);
+  --bs-btn-active-border-color: var(--green-light);
+  animation: pulse 2.2s ease-out infinite;
+}
+
+.btn-icon {
+  width: 0.75rem;
+  height: 0.875rem;
+}
+
+@keyframes pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.55); }
+  70%  { box-shadow: 0 0 0 14px rgba(255, 255, 255, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+}
+
+.btn-outline-light-custom {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: transparent;
+  --bs-btn-border-color: #fff;
+  --bs-btn-hover-color: var(--green-dark);
+  --bs-btn-hover-bg: #fff;
+  --bs-btn-hover-border-color: #fff;
+  --bs-btn-active-color: var(--green-dark);
+  --bs-btn-active-bg: #fff;
+  --bs-btn-active-border-color: #fff;
+}
+
+.hero .btn:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+  box-shadow: none;
+}
+
+/* ASCII portrait */
+.hero-portrait {
+  margin: 0;
+  text-align: center;
+}
+
+#portrait {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  aspect-ratio: 1;
+  margin: 0 auto;
+  cursor: crosshair;
+  touch-action: pan-y;   /* phones can still scroll the page over it */
+}
+
+.portrait-hint {
+  margin-top: 0.25rem;
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+/* Show the right hint for mouse or touch screens */
+@media (hover: none) {
+  .hint-hover { display: none; }
+}
+
+@media (hover: hover) {
+  .hint-touch { display: none; }
+}
+
+@media (max-width: 991.98px) {
+  .hero {
+    padding: 2.5rem 0 5rem;
+  }
+
+  #portrait {
+    max-width: 260px;
+  }
+}
+
+/* Scroll-down arrow */
+.scroll-cue {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-left: -1.25rem;
+  color: #fff;
+  opacity: 0.8;
+  animation: bob 1.8s ease-in-out infinite;
+}
+
+.scroll-cue:hover {
+  color: #fff;
+  opacity: 1;
+}
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(8px); }
+}
+
+/* Content rises in one piece after another when the page loads */
+.hero-content > * {
+  animation: rise 0.7s ease-out both;
+}
+
+.hero-content > :nth-child(2) { animation-delay: 0.1s; }
+.hero-content > :nth-child(3) { animation-delay: 0.2s; }
+.hero-content > :nth-child(4) { animation-delay: 0.3s; }
+.hero-content > :nth-child(5) { animation-delay: 0.4s; }
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Phones: full-width buttons */
+@media (max-width: 575.98px) {
+  .hero-actions .btn {
+    flex: 1 1 100%;
+  }
+}
+
+/* Very small phones: tighter letters so the loadout line stays on one line */
+@media (max-width: 359.98px) {
+  .hero-typed {
+    letter-spacing: 0;
+  }
+}
+
+/* Respect people who turn animations off on their device */
+@media (prefers-reduced-motion: reduce) {
+  .hero-content > *,
+  .btn-start,
+  .scroll-cue,
+  .typed-cursor {
+    animation: none;
+  }
+}
+
 /* ===== Sections ===== */
 header,
 section {
