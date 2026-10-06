@@ -280,3 +280,25 @@ if (portraitCanvas && typeof PORTRAIT_ASCII !== "undefined") {
     }).observe(portraitCanvas);
   }
 }
+
+// ===== Off the clock photo reel =====
+const reelTrack = document.querySelector(".reel-track");
+
+if (reelTrack && !reduceMotion) {
+  // Add a second copy of the photos so the loop has no gap
+  [...reelTrack.children].forEach((card) => {
+    const copy = card.cloneNode(true);
+    copy.setAttribute("aria-hidden", "true");
+    copy.querySelector("img").alt = "";
+    reelTrack.appendChild(copy);
+  });
+
+  // Keep the same speed (about 60px a second) on every screen size
+  function setReelSpeed() {
+    const loopWidth = reelTrack.scrollWidth / 2;
+    reelTrack.style.setProperty("--reel-duration", `${loopWidth / 60}s`);
+  }
+
+  setReelSpeed();
+  window.addEventListener("resize", setReelSpeed);
+}

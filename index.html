@@ -14,7 +14,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@1,125,900&family=Inter:wght@400;500;600&family=Rajdhani:wght@600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@1,125,900&family=Inter:wght@400;500;600&family=Rajdhani:wght@600;700&family=Tilt+Neon&display=swap"
       rel="stylesheet"
     />
 
@@ -140,10 +140,131 @@
     </header>
 
     <main>
-      <!-- About (Phase 4) -->
+      <!-- About -->
       <section id="about">
         <div class="container">
-          <h2>About</h2>
+          <div class="section-head">
+            <p class="section-label"><span>01</span> / About</p>
+            <h2 class="section-title">Player Profile</h2>
+          </div>
+
+          <div class="row g-4 g-lg-5 align-items-center">
+            <div class="col-lg-7">
+              <div class="about-bio">
+                <p class="about-lead">
+                  I'm John-Paul, a Nigerian full-stack web developer who builds
+                  fast, responsive websites that look sharp on every screen.
+                </p>
+                <p>
+                  I handle the whole build: clean, accessible front ends with
+                  HTML, CSS, JavaScript and Bootstrap, and solid back ends with
+                  Node.js and Python. Then I deploy so the site goes live
+                  quickly. My recent work includes a full-stack website for
+                  altar servers that's live and in real use.
+                </p>
+                <p>
+                  I care about the details people notice: pages that load fast,
+                  layouts that hold up on any phone, and code that's easy to
+                  maintain.
+                </p>
+              </div>
+            </div>
+
+            <div class="col-lg-5">
+              <aside class="player-card" aria-label="Player card">
+                <div class="player-card-head">
+                  <span>Player card</span>
+                  <span class="player-card-id">P1</span>
+                </div>
+                <dl class="player-stats">
+                  <div>
+                    <dt>Class</dt>
+                    <dd>Full-Stack Developer</dd>
+                  </div>
+                  <div>
+                    <dt>Primary</dt>
+                    <dd>JavaScript</dd>
+                  </div>
+                  <div>
+                    <dt>Secondary</dt>
+                    <dd>Python</dd>
+                  </div>
+                  <div>
+                    <dt>Origin</dt>
+                    <dd><span class="mini-flag" aria-hidden="true"></span>Nigeria</dd>
+                  </div>
+                  <div>
+                    <dt>Status</dt>
+                    <dd><span class="status-dot" aria-hidden="true"></span>Open to projects</dd>
+                  </div>
+                </dl>
+              </aside>
+            </div>
+          </div>
+        </div>
+
+        <!-- Off the clock: neon sign and a moving photo reel -->
+        <div class="off-clock">
+          <div class="container">
+            <h3 class="neon-sign">
+              <span class="neon-white">Off the</span>
+              <span class="neon-green">clock</span>
+            </h3>
+            <p class="off-clock-sub">What I'm up to when I'm not writing code.</p>
+          </div>
+
+          <div class="reel">
+            <ul class="reel-track">
+              <li class="reel-card">
+                <img src="assets/img/offclock/chelsea-ucl.jpg" alt="Chelsea players celebrating the 2021 Champions League win" width="927" height="600" loading="lazy" />
+                <span class="reel-label"><span class="reel-tag">Football</span>Chelsea FC</span>
+              </li>
+              <li class="reel-card">
+                <img src="assets/img/offclock/codm.jpg" alt="Call of Duty: Mobile lobby" width="1298" height="600" loading="lazy" />
+                <span class="reel-label"><span class="reel-tag">Gaming</span>CODM</span>
+              </li>
+              <li class="reel-card">
+                <img src="assets/img/offclock/g63.jpg" alt="Red Mercedes-AMG G 63" width="1067" height="600" loading="lazy" />
+                <span class="reel-label"><span class="reel-tag">Cars</span>Mercedes-AMG G 63</span>
+              </li>
+              <li class="reel-card is-portrait">
+                <img src="assets/img/offclock/spiderman2.jpg" alt="Spider-Man 2 on the TV" width="450" height="600" loading="lazy" />
+                <span class="reel-label"><span class="reel-tag">Gaming</span>Spider-Man 2</span>
+              </li>
+              <li class="reel-card">
+                <img src="assets/img/offclock/gle63.jpg" alt="Mercedes-AMG GLE 63 coupe by the sea" width="960" height="600" loading="lazy" />
+                <span class="reel-label"><span class="reel-tag">Cars</span>Mercedes-AMG GLE 63</span>
+              </li>
+              <li class="reel-card is-portrait">
+                <img src="assets/img/offclock/mk1.jpg" alt="Mortal Kombat 1 on the PS5 home screen" width="450" height="600" loading="lazy" />
+                <span class="reel-label"><span class="reel-tag">Gaming</span>Mortal Kombat 1</span>
+              </li>
+              <li class="reel-card">
+                <img src="assets/img/offclock/chelsea-crest.jpg" alt="Chelsea FC crest" width="1067" height="600" loading="lazy" />
+                <span class="reel-label"><span class="reel-tag">Football</span>Blue is the colour</span>
+              </li>
+              <li class="reel-card">
+                <img src="assets/img/offclock/gta.jpg" alt="Grand Theft Auto artwork" width="958" height="600" loading="lazy" />
+                <span class="reel-label"><span class="reel-tag">Gaming</span>GTA</span>
+              </li>
+              <li class="reel-card is-portrait">
+                <img src="assets/img/offclock/urus.jpg" alt="Grey Lamborghini Urus in a showroom" width="450" height="600" loading="lazy" />
+                <span class="reel-label"><span class="reel-tag">Cars</span>Lamborghini Urus</span>
+              </li>
+              <li class="reel-card is-portrait">
+                <img src="assets/img/offclock/sim-racing.jpg" alt="Racing sim setup with a steering wheel and screens" width="450" height="600" loading="lazy" />
+                <span class="reel-label"><span class="reel-tag">Racing</span>Sim racing</span>
+              </li>
+              <li class="reel-card">
+                <img src="assets/img/offclock/spiderman-art.jpg" alt="Marvel's Spider-Man artwork" width="1067" height="600" loading="lazy" />
+                <span class="reel-label"><span class="reel-tag">Gaming</span>Marvel's Spider-Man</span>
+              </li>
+              <li class="reel-card">
+                <img src="assets/img/offclock/tlou2.jpg" alt="The Last of Us Part II artwork" width="1067" height="600" loading="lazy" />
+                <span class="reel-label"><span class="reel-tag">Gaming</span>The Last of Us Part II</span>
+              </li>
+            </ul>
+          </div>
         </div>
       </section>
 

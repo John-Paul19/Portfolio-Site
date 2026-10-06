@@ -1,0 +1,10 @@
+# Original full-size photos. The site uses the web-sized copies in assets/img/offclock/
+assets/offclock/
+
+# Full portrait photo. The site only uses the ASCII version in portrait-ascii.js
+assets/img/portrait.jpg
+
+# System files
+Thumbs.db
+desktop.ini
+.DS_Store

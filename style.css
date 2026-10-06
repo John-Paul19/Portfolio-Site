@@ -467,6 +467,386 @@ a:hover {
   }
 }
 
+/* ===== Section headings (shared by About, Skills, Projects, Contact) ===== */
+.section-head {
+  margin-bottom: 3rem;
+}
+
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+  color: var(--green);
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.section-label::before {
+  content: "";
+  width: 2.5rem;
+  height: 2px;
+  background-color: var(--green);
+}
+
+.section-label span {
+  font-weight: 700;
+}
+
+/* Same AMG style as the hero name */
+.section-title {
+  margin: 0;
+  font-family: "Archivo", var(--font-heading);
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-style: italic;
+  font-stretch: 125%;
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: 0;
+}
+
+/* ===== About ===== */
+.about-bio {
+  max-width: 40rem;
+  font-size: 1.05rem;
+}
+
+.about-lead {
+  color: var(--heading);
+  font-size: 1.3rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+/* Player card: a dark HUD panel */
+.player-card {
+  position: relative;
+  padding: 1.5rem 1.75rem;
+  color: #fff;
+  background-color: var(--charcoal);
+  background-image:
+    linear-gradient(45deg, rgba(255, 255, 255, 0.03) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.03) 75%),
+    linear-gradient(45deg, rgba(255, 255, 255, 0.03) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.03) 75%);
+  background-size: 8px 8px;
+  background-position: 0 0, 4px 4px;
+  border-left: 4px solid var(--green-bright);
+}
+
+/* HUD corner brackets */
+.player-card::before,
+.player-card::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: var(--green-bright);
+  border-style: solid;
+}
+
+.player-card::before {
+  top: 8px;
+  right: 8px;
+  border-width: 2px 2px 0 0;
+}
+
+.player-card::after {
+  bottom: 8px;
+  right: 8px;
+  border-width: 0 2px 2px 0;
+}
+
+.player-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  padding-right: 1.5rem;
+  color: var(--green-bright);
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.player-card-id {
+  padding: 0.1rem 0.5rem;
+  border: 1px solid var(--green-bright);
+}
+
+.player-stats {
+  margin: 0;
+}
+
+.player-stats > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.12);
+}
+
+.player-stats > div:last-child {
+  border-bottom: none;
+}
+
+.player-stats dt {
+  color: #9db3a7;
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.player-stats dd {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  text-align: right;
+}
+
+.mini-flag {
+  width: 1.35rem;
+  height: 0.9rem;
+  background: linear-gradient(90deg, var(--green) 33.33%, #fff 33.33% 66.66%, var(--green) 66.66%);
+  outline: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.status-dot {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background-color: var(--green-bright);
+  animation: status-pulse 2s ease-out infinite;
+}
+
+@keyframes status-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(0, 178, 107, 0.7); }
+  70%  { box-shadow: 0 0 0 8px rgba(0, 178, 107, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 178, 107, 0); }
+}
+
+/* ===== Off the clock: neon sign and photo reel ===== */
+#about {
+  padding-bottom: 0;   /* the dark band below closes the section */
+}
+
+.off-clock {
+  position: relative;
+  margin-top: 5rem;
+  padding: 4.5rem 0 4rem;
+  overflow: hidden;
+  color: #fff;
+  text-align: center;
+  background-color: #0b0e0c;
+  background-image:
+    radial-gradient(ellipse at 50% 0%, rgba(0, 178, 107, 0.28), transparent 60%),
+    linear-gradient(45deg, rgba(255, 255, 255, 0.025) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.025) 75%),
+    linear-gradient(45deg, rgba(255, 255, 255, 0.025) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.025) 75%);
+  background-size: auto, 8px 8px, 8px 8px;
+  background-position: 0 0, 0 0, 4px 4px;
+}
+
+/* Neon sign: glowing tubes inside a glowing frame */
+.neon-sign {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 0.35em;
+  margin-bottom: 1rem;
+  padding: 0.3em 0.75em;
+  color: #fff;
+  font-family: "Tilt Neon", var(--font-heading);
+  font-size: clamp(2.2rem, 7vw, 4.25rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: 0.08em;
+  border: 3px solid #eafff3;
+  border-radius: 18px;
+  box-shadow:
+    0 0 4px #fff,
+    0 0 14px rgba(57, 255, 154, 0.8),
+    0 0 36px rgba(0, 178, 107, 0.55),
+    inset 0 0 14px rgba(57, 255, 154, 0.45);
+}
+
+.neon-white {
+  text-shadow:
+    0 0 3px #fff,
+    0 0 10px #fff,
+    0 0 22px rgba(255, 255, 255, 0.6),
+    0 0 42px rgba(0, 178, 107, 0.7);
+}
+
+.neon-green {
+  color: #e2fff0;
+  text-shadow:
+    0 0 3px #c8ffe2,
+    0 0 10px #39ff9a,
+    0 0 22px #00d27a,
+    0 0 44px #00b26b,
+    0 0 80px #00b26b;
+  animation: neon-flicker 7s linear infinite;
+}
+
+/* Every few seconds the green tube stutters, like a real sign */
+@keyframes neon-flicker {
+  0%, 18%, 20.5%, 22%, 62%, 64%, 100% {
+    opacity: 1;
+  }
+  19%, 21.5%, 63% {
+    opacity: 0.35;
+  }
+}
+
+.off-clock-sub {
+  margin-bottom: 0;
+  color: #b7c9bf;
+  font-size: 1.05rem;
+}
+
+/* Photo reel: one long strip that slides left forever */
+.reel {
+  margin-top: 2.5rem;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.reel-track {
+  display: flex;
+  width: max-content;
+  margin: 0;
+  padding: 1.75rem 0;   /* room for the tilt, glow and hover zoom */
+  list-style: none;
+  animation: reel-scroll var(--reel-duration, 80s) linear infinite;
+}
+
+/* Hover (or tap on phones) pauses the reel */
+.reel:hover .reel-track {
+  animation-play-state: paused;
+}
+
+@keyframes reel-scroll {
+  to { transform: translateX(-50%); }
+}
+
+.reel-card {
+  position: relative;
+  flex: none;
+  height: 280px;
+  aspect-ratio: 16 / 10;
+  margin-right: 1.75rem;   /* margin, not gap, so the loop lines up exactly */
+  overflow: hidden;
+  border: 2px solid #eafff3;
+  border-radius: 12px;
+  box-shadow:
+    0 0 5px rgba(255, 255, 255, 0.7),
+    0 0 16px rgba(57, 255, 154, 0.5),
+    0 0 34px rgba(0, 178, 107, 0.3);
+  transform: rotate(-2deg);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.reel-card:nth-child(even) {
+  border-color: #7dffbd;
+  transform: rotate(2deg);
+}
+
+.reel-card.is-portrait {
+  aspect-ratio: 3 / 4;
+}
+
+.reel-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.reel-card:hover {
+  z-index: 2;
+  transform: rotate(0) scale(1.08);
+  box-shadow:
+    0 0 8px #fff,
+    0 0 24px rgba(57, 255, 154, 0.9),
+    0 0 56px rgba(0, 178, 107, 0.6);
+}
+
+.reel-label {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 2.5rem 1rem 0.8rem;
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-align: left;
+  text-transform: uppercase;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
+}
+
+.reel-tag {
+  display: block;
+  color: #39ff9a;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-shadow: 0 0 8px rgba(57, 255, 154, 0.8);
+}
+
+@media (max-width: 767.98px) {
+  .off-clock {
+    padding: 3.5rem 0 3rem;
+  }
+
+  .reel-card {
+    height: 200px;
+    margin-right: 1.25rem;
+  }
+
+  .reel-label {
+    font-size: 0.95rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .status-dot,
+  .neon-green {
+    animation: none;
+  }
+
+  /* No sliding: the photos become a row you can swipe through */
+  .reel {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .reel-track {
+    padding-inline: 1rem;
+    animation: none;
+  }
+
+  .reel-card,
+  .reel-card:nth-child(even),
+  .reel-card:hover {
+    scroll-snap-align: center;
+    transform: none;
+  }
+}
+
 /* ===== Sections ===== */
 header,
 section {
