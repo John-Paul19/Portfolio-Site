@@ -7,10 +7,10 @@
   <meta name="description" content="Iguegbe Enyiolisa John-Paul is a full-stack web developer building fast, responsive websites with HTML, CSS, JavaScript, Node.js and Python.">
   <meta name="theme-color" content="#008751">
 
-  <!-- Fonts: Rajdhani (headings), Inter (body) -->
+  <!-- Fonts: Rajdhani (headings), Inter (body), Archivo Expanded Black Italic (logo) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@1,125,900&family=Inter:wght@400;500;600&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
 
   <!-- Bootstrap 5.3 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
@@ -18,10 +18,31 @@
   <!-- Site styles (after Bootstrap so they override it) -->
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-bs-spy="scroll" data-bs-target="#navLinks">
 
-  <!-- Navbar (Phase 2) -->
-  <nav></nav>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg sticky-top site-nav" aria-label="Main">
+    <div class="container">
+      <a class="navbar-brand logo" href="#home">
+        <span class="logo-text">John-Paul</span>
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Open menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto" id="navLinks">
+          <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+          <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+        <a class="btn btn-hire ms-lg-3" href="#contact">Hire Me</a>
+      </div>
+    </div>
+  </nav>
 
   <!-- Hero (Phase 3) -->
   <header id="home">

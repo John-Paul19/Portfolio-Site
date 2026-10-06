@@ -4,8 +4,10 @@
   --green: #008751;          /* flag green: buttons, links, highlights */
   --green-dark: #006b3f;     /* hover states and the full-green sections */
   --green-light: #e6f3ec;    /* soft tint for badges and backgrounds */
+  --green-bright: #00b26b;   /* flag green, brightened to read on dark backgrounds */
 
   /* Neutrals */
+  --charcoal: #141816;       /* logo edge and dark details */
   --bg: #ffffff;
   --surface: #f4f7f5;        /* cards and alternate panels */
   --border: #dfe7e2;
@@ -19,6 +21,10 @@
 }
 
 /* ===== Base ===== */
+html {
+  scroll-padding-top: 5rem;  /* stops the sticky navbar covering section headings */
+}
+
 body {
   background-color: var(--bg);
   color: var(--text);
@@ -45,6 +51,126 @@ a:hover {
 ::selection {
   background-color: var(--green);
   color: #fff;
+}
+
+/* ===== Navbar ===== */
+.site-nav {
+  --bs-navbar-padding-y: 0.9rem;
+  --bs-navbar-color: var(--heading);
+  --bs-navbar-hover-color: var(--green);
+  --bs-navbar-active-color: var(--green);
+  --bs-navbar-nav-link-padding-x: 0.9rem;
+  background-color: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid transparent;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.site-nav.scrolled {
+  border-bottom-color: var(--border);
+  box-shadow: 0 6px 24px rgba(13, 26, 19, 0.08);
+}
+
+/* Logo: AMG-style wordmark (wide, heavy, slanted) in green-white-green chrome */
+.logo {
+  font-family: "Archivo", var(--font-heading);
+  font-size: 1.5rem;
+  font-style: italic;
+  font-stretch: 125%;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  transition: transform 0.25s ease;
+}
+
+.logo:hover {
+  transform: translateX(3px);
+}
+
+.logo-text {
+  display: inline-block;
+  /* Top layer: chrome sheen. Bottom layer: the flag colours */
+  background-image:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.15)),
+    linear-gradient(90deg, var(--green) 15%, #ffffff 50%, var(--green) 85%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  /* Thin dark edge plus a small offset shadow, so the white middle stays visible on white */
+  filter: drop-shadow(0 0 0.5px var(--charcoal)) drop-shadow(1px 1px 0 var(--charcoal));
+}
+
+.site-nav .nav-link {
+  position: relative;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.site-nav .navbar-toggler {
+  border: none;
+  padding: 0.4rem;
+}
+
+.site-nav .navbar-toggler:focus {
+  box-shadow: 0 0 0 3px rgba(0, 135, 81, 0.35);
+}
+
+.btn-hire {
+  --bs-btn-padding-x: 1.4rem;
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--green);
+  --bs-btn-border-color: var(--green);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: var(--green-dark);
+  --bs-btn-hover-border-color: var(--green-dark);
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: var(--green-dark);
+  --bs-btn-active-border-color: var(--green-dark);
+  --bs-btn-focus-shadow-rgb: 0, 135, 81;
+  --bs-btn-border-radius: 2px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Desktop: green underline slides in under the hovered or current link */
+@media (min-width: 992px) {
+  .site-nav .nav-link::after {
+    content: "";
+    position: absolute;
+    left: var(--bs-navbar-nav-link-padding-x);
+    right: var(--bs-navbar-nav-link-padding-x);
+    bottom: 0.2rem;
+    height: 2px;
+    background-color: var(--green);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+  }
+
+  .site-nav .nav-link:hover::after,
+  .site-nav .nav-link.active::after {
+    transform: scaleX(1);
+  }
+}
+
+/* Phones and tablets: spacing for the dropdown menu */
+@media (max-width: 991.98px) {
+  .site-nav .navbar-collapse {
+    padding: 0.75rem 0 1rem;
+  }
+
+  .site-nav .nav-link {
+    padding-block: 0.6rem;
+  }
+
+  .btn-hire {
+    margin-top: 0.75rem;
+  }
 }
 
 /* ===== Sections ===== */
