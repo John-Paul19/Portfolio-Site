@@ -1,0 +1,65 @@
+/* ===== Theme ===== */
+:root {
+  /* Nigerian green */
+  --green: #008751;          /* flag green: buttons, links, highlights */
+  --green-dark: #006b3f;     /* hover states and the full-green sections */
+  --green-light: #e6f3ec;    /* soft tint for badges and backgrounds */
+
+  /* Neutrals */
+  --bg: #ffffff;
+  --surface: #f4f7f5;        /* cards and alternate panels */
+  --border: #dfe7e2;
+  --heading: #0d1a13;
+  --text: #33413a;
+  --text-muted: #5f6e66;
+
+  /* Fonts */
+  --font-heading: "Rajdhani", sans-serif;
+  --font-body: "Inter", sans-serif;
+}
+
+/* ===== Base ===== */
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--heading);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+a {
+  color: var(--green);
+}
+
+a:hover {
+  color: var(--green-dark);
+}
+
+::selection {
+  background-color: var(--green);
+  color: #fff;
+}
+
+/* ===== Sections ===== */
+header,
+section {
+  padding: 5rem 0;
+}
+
+footer {
+  padding: 2rem 0;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+footer p {
+  margin: 0;
+}
