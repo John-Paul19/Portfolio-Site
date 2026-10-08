@@ -173,15 +173,10 @@ a:hover {
   }
 }
 
-/* ===== Hero ===== */
-.hero {
+/* ===== Green bands: the hero at the top and Contact at the bottom ===== */
+.green-band {
   position: relative;
   isolation: isolate;
-  display: flex;
-  align-items: center;
-  min-height: calc(100vh - 4.25rem);   /* full screen minus the navbar */
-  min-height: calc(100svh - 4.25rem);
-  padding: 6rem 0;
   overflow: hidden;
   color: #fff;
   background:
@@ -190,7 +185,7 @@ a:hover {
 }
 
 /* Carbon-fibre weave laid over the green */
-.hero::before {
+.green-band::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -205,12 +200,21 @@ a:hover {
 }
 
 /* Darker edges so the middle stands out */
-.hero::after {
+.green-band::after {
   content: "";
   position: absolute;
   inset: 0;
   z-index: -1;
   background: radial-gradient(ellipse at center, transparent 45%, rgba(0, 0, 0, 0.3) 100%);
+}
+
+/* ===== Hero ===== */
+.hero {
+  display: flex;
+  align-items: center;
+  min-height: calc(100vh - 4.25rem);   /* full screen minus the navbar */
+  min-height: calc(100svh - 4.25rem);
+  padding: 6rem 0;
 }
 
 .hero-eyebrow {
@@ -301,7 +305,9 @@ a:hover {
   gap: 1rem;
 }
 
-.hero-actions .btn {
+/* Big uppercase buttons, shared by the hero and Contact */
+.hero-actions .btn,
+.contact-actions .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -354,7 +360,8 @@ a:hover {
   --bs-btn-active-border-color: #fff;
 }
 
-.hero .btn:focus-visible {
+.hero .btn:focus-visible,
+.contact .btn:focus-visible {
   outline: 3px solid #fff;
   outline-offset: 3px;
   box-shadow: none;
@@ -445,7 +452,8 @@ a:hover {
 
 /* Phones: full-width buttons */
 @media (max-width: 575.98px) {
-  .hero-actions .btn {
+  .hero-actions .btn,
+  .contact-actions .btn {
     flex: 1 1 100%;
   }
 }
@@ -1683,19 +1691,355 @@ a:hover {
   }
 }
 
+/* ===== Contact: the green band at the bottom ===== */
+.contact .section-label,
+.contact .section-title {
+  color: #fff;
+}
+
+.contact .section-label::before {
+  background-color: #fff;
+}
+
+.contact .section-lead {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Shows which service was picked with a "Start mission" button */
+.mission-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: -1.25rem 0 2rem;
+  padding: 0.4rem 0.45rem 0.4rem 1rem;
+  color: var(--charcoal);
+  background-color: #fff;
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  animation: chip-in 0.4s ease-out;
+}
+
+.mission-chip[hidden] {
+  display: none;
+}
+
+.mission-chip strong {
+  color: var(--green-dark);
+}
+
+.mission-chip-clear {
+  display: grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  color: var(--charcoal);
+  font-size: 1.25rem;
+  line-height: 1;
+  background-color: var(--green-light);
+  border: 0;
+  border-radius: 2px;
+}
+
+.mission-chip-clear:hover {
+  background-color: #cfe9db;
+}
+
+@keyframes chip-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* WhatsApp and email cards: dark HUD panels on the green */
+.contact-card {
+  height: 100%;
+  padding: 1.75rem 2.75rem 1.75rem 1.75rem;   /* extra on the right clears the corner brackets */
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+}
+
+.contact-card-head {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.contact-icon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  color: var(--charcoal);
+  background-color: var(--green-bright);
+}
+
+.contact-icon svg {
+  width: 1.6rem;
+  height: 1.6rem;
+  fill: currentColor;
+}
+
+.contact-card-label {
+  margin: 0;
+  color: var(--green-bright);
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.contact-card-value {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.75rem;
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1.2rem, 2.6vw, 1.5rem);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.contact-card-text {
+  margin-bottom: 1.5rem;
+  color: #b7c9bf;
+}
+
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.6rem;
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 2px;
+  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.copy-btn svg {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
+.copy-btn:hover {
+  color: var(--green-bright);
+  border-color: var(--green-bright);
+}
+
+.copy-btn.is-copied {
+  color: var(--charcoal);
+  background-color: var(--green-bright);
+  border-color: var(--green-bright);
+}
+
+.contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/* On the dark cards the button pulses neon green instead of white */
+.contact-card .btn-start {
+  animation-name: pulse-green;
+}
+
+@keyframes pulse-green {
+  0%   { box-shadow: 0 0 0 0 rgba(0, 178, 107, 0.6); }
+  70%  { box-shadow: 0 0 0 14px rgba(0, 178, 107, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 178, 107, 0); }
+}
+
+.contact-actions .btn svg {
+  width: 1.15rem;
+  height: 1.15rem;
+  fill: currentColor;
+}
+
+/* Social links */
+.socials {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 2.5rem;
+}
+
+.socials-label {
+  margin: 0 0.5rem 0 0;
+  color: rgba(255, 255, 255, 0.8);
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.5rem 1.1rem;
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  border-radius: 2px;
+  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.social-link svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  fill: currentColor;
+}
+
+.social-link:hover,
+.social-link:focus-visible {
+  color: var(--green-dark);
+  background-color: #fff;
+  border-color: #fff;
+}
+
+.social-link:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mission-chip,
+  .contact-card .btn-start {
+    animation: none;
+  }
+}
+
+/* ===== Footer: closes the green band ===== */
+.site-footer {
+  padding: 3rem 0 2rem;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.9rem;
+  background-color: #00341f;
+}
+
+.footer-top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.footer-logo {
+  font-size: 1.75rem;
+  text-decoration: none;
+}
+
+/* Lighter green chrome so the logo shows up on the dark green */
+.footer-logo .logo-text {
+  background-image:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.15)),
+    linear-gradient(90deg, #7be0b0 15%, #ffffff 50%, #7be0b0 85%);
+}
+
+.footer-tagline {
+  margin: 0.6rem 0 0;
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.footer-links {
+  display: flex;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer-links a {
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 2px;
+  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.footer-links a:hover,
+.footer-links a:focus-visible {
+  color: var(--charcoal);
+  background-color: var(--green-bright);
+  border-color: var(--green-bright);
+}
+
+.footer-links svg {
+  width: 1.15rem;
+  height: 1.15rem;
+  fill: currentColor;
+}
+
+.footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 1.5rem;
+}
+
+.footer-bottom p {
+  margin: 0;
+}
+
+.back-to-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.back-to-top svg {
+  width: 1rem;
+  height: 1rem;
+  transition: transform 0.2s ease;
+}
+
+.back-to-top:hover {
+  color: var(--green-bright);
+}
+
+.back-to-top:hover svg {
+  transform: translateY(-3px);
+}
+
 /* ===== Sections ===== */
 header,
 section {
   padding: 5rem 0;
-}
-
-footer {
-  padding: 2rem 0;
-  border-top: 1px solid var(--border);
-  color: var(--text-muted);
-  font-size: 0.9rem;
-}
-
-footer p {
-  margin: 0;
 }

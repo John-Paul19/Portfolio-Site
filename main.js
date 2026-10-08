@@ -434,3 +434,65 @@ if (offClock && !reduceMotion) {
     placeCards(shown ?? scrollProgress());
   });
 }
+
+// ===== Contact: WhatsApp and email messages about the picked mission =====
+const WHATSAPP_NUMBER = "2348146776126";
+const EMAIL = "ienyiolisa@gmail.com";
+const missionChip = document.querySelector(".mission-chip");
+
+// Point the WhatsApp, email and Gmail buttons at a ready-made message
+function setMission(mission) {
+  const message = mission
+    ? `Hi John-Paul, I'm interested in your ${mission} service.`
+    : "Hi John-Paul, I found your portfolio and I'd like to talk about a project.";
+  const subject = mission ? `Project enquiry: ${mission}` : "Project enquiry";
+  const body = encodeURIComponent(message);
+  const su = encodeURIComponent(subject);
+
+  document.querySelectorAll("[data-contact]").forEach((link) => {
+    const type = link.dataset.contact;
+    if (type === "whatsapp") link.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${body}`;
+    if (type === "email") link.href = `mailto:${EMAIL}?subject=${su}&body=${body}`;
+    if (type === "gmail") {
+      link.href = `https://mail.google.com/mail/?view=cm&fs=1&to=${EMAIL}&su=${su}&body=${body}`;
+    }
+  });
+
+  missionChip.hidden = !mission;
+  if (mission) missionChip.querySelector(".mission-chip-name").textContent = mission;
+}
+
+// "Start mission" buttons in Services pick the mission on their way down to Contact
+document.querySelectorAll("[data-mission]").forEach((button) => {
+  button.addEventListener("click", () => setMission(button.dataset.mission));
+});
+
+missionChip
+  .querySelector(".mission-chip-clear")
+  .addEventListener("click", () => setMission(null));
+
+// Copy the email address (with a fallback for browsers that block the clipboard)
+document.querySelectorAll(".copy-btn").forEach((button) => {
+  const label = button.querySelector("span");
+  button.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(button.dataset.copy);
+    } catch {
+      const field = document.createElement("textarea");
+      field.value = button.dataset.copy;
+      document.body.appendChild(field);
+      field.select();
+      document.execCommand("copy");
+      field.remove();
+    }
+    button.classList.add("is-copied");
+    label.textContent = "Copied!";
+    setTimeout(() => {
+      button.classList.remove("is-copied");
+      label.textContent = "Copy";
+    }, 2000);
+  });
+});
+
+// ===== Footer: keep the copyright year current =====
+document.getElementById("year").textContent = new Date().getFullYear();
