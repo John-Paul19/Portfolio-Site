@@ -302,3 +302,29 @@ if (reelTrack && !reduceMotion) {
   setReelSpeed();
   window.addEventListener("resize", setReelSpeed);
 }
+
+// ===== Skills: "equip" each loadout panel when it scrolls into view =====
+const loadoutPanels = document.querySelectorAll(".loadout-panel");
+
+if (loadoutPanels.length && !reduceMotion) {
+  const equipObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("equipped");
+          equipObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.25 },
+  );
+
+  loadoutPanels.forEach((panel) => {
+    // Number the items so they equip one after another
+    panel.querySelectorAll(".equip-item").forEach((item, i) => {
+      item.style.setProperty("--i", i);
+    });
+    panel.classList.add("will-equip");
+    equipObserver.observe(panel);
+  });
+}
