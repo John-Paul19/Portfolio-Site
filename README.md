@@ -4,6 +4,8 @@ My personal site as a full-stack web developer. It's a one-page portfolio with a
 gaming-HUD look, AMG-inspired details and Nigeria's green-white-green running
 from top to bottom.
 
+**Live site: [iguegbe.netlify.app](https://iguegbe.netlify.app)**
+
 ![The hero section: my name in chrome lettering beside an ASCII-art portrait](assets/img/readme-preview.jpg)
 
 ## What's on the page
