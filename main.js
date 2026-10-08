@@ -281,28 +281,6 @@ if (portraitCanvas && typeof PORTRAIT_ASCII !== "undefined") {
   }
 }
 
-// ===== Off the clock photo reel =====
-const reelTrack = document.querySelector(".reel-track");
-
-if (reelTrack && !reduceMotion) {
-  // Add a second copy of the photos so the loop has no gap
-  [...reelTrack.children].forEach((card) => {
-    const copy = card.cloneNode(true);
-    copy.setAttribute("aria-hidden", "true");
-    copy.querySelector("img").alt = "";
-    reelTrack.appendChild(copy);
-  });
-
-  // Keep the same speed (about 60px a second) on every screen size
-  function setReelSpeed() {
-    const loopWidth = reelTrack.scrollWidth / 2;
-    reelTrack.style.setProperty("--reel-duration", `${loopWidth / 60}s`);
-  }
-
-  setReelSpeed();
-  window.addEventListener("resize", setReelSpeed);
-}
-
 // ===== Skills: "equip" each loadout panel when it scrolls into view =====
 const loadoutPanels = document.querySelectorAll(".loadout-panel");
 
@@ -326,5 +304,133 @@ if (loadoutPanels.length && !reduceMotion) {
     });
     panel.classList.add("will-equip");
     equipObserver.observe(panel);
+  });
+}
+
+// ===== Off the clock: thrown photos fly into a grid as you scroll =====
+// The section is a few screens tall and its stage sticks in place, so scrolling through
+// it plays the animation (and scrolling back up rewinds it).
+const offClock = document.querySelector(".off-clock");
+
+if (offClock && !reduceMotion) {
+  const stage = offClock.querySelector(".off-clock-stage");
+  const grid = offClock.querySelector(".clock-grid");
+  const cards = [...grid.children];
+  const clamp = (value) => Math.min(1, Math.max(0, value));
+  const easeOut = (t) => 1 - Math.pow(1 - t, 3);
+
+  // A fixed "random" throw for every photo, the same on every visit
+  let seed = 7;
+  const random = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const throws = cards.map(() => ({
+    x: random() - 0.5,
+    y: random() - 0.5,
+    spin: (random() - 0.5) * 140,
+    tiltX: (random() - 0.5) * 160,
+    tiltY: (random() - 0.5) * 160,
+    scale: 0.7 + random() * 0.9,
+  }));
+
+  // Shuffle the order the photos land in
+  const landStep = cards.map((_, i) => i);
+  for (let i = landStep.length - 1; i > 0; i--) {
+    const j = Math.floor(random() * (i + 1));
+    [landStep[i], landStep[j]] = [landStep[j], landStep[i]];
+  }
+
+  let slots = [];
+  let stageW = 0;
+  let stageH = 0;
+
+  offClock.classList.add("is-scatter");
+
+  // Size the cards and work out each one's place in the finished grid
+  function layoutClockGrid() {
+    stageW = stage.clientWidth;
+    stageH = stage.clientHeight;
+    const small = stageW < 576;
+    const cols = small ? 3 : 4;
+    const rows = Math.ceil(cards.length / cols);
+    const gap = small ? 8 : 16;
+    const ratio = small ? 1 : 0.75; // square cards on phones, 4:3 on bigger screens
+    const cardW = Math.min(
+      (grid.clientWidth - gap * (cols - 1)) / cols,
+      (grid.clientHeight - gap * (rows - 1)) / rows / ratio,
+    );
+    const cardH = cardW * ratio;
+    grid.style.setProperty("--cw", `${cardW}px`);
+    grid.style.setProperty("--ch", `${cardH}px`);
+
+    const gridW = cols * cardW + (cols - 1) * gap;
+    const gridH = rows * cardH + (rows - 1) * gap;
+    slots = cards.map((_, i) => ({
+      x: -gridW / 2 + (i % cols) * (cardW + gap) + cardW / 2,
+      y: -gridH / 2 + Math.floor(i / cols) * (cardH + gap) + cardH / 2,
+    }));
+  }
+
+  // progress 0 = every photo thrown and tumbling, 1 = all of them in the grid
+  function placeCards(progress) {
+    cards.forEach((card, i) => {
+      const t = easeOut(clamp((progress * 1.55 - landStep[i] * 0.045) / 0.6));
+      const from = throws[i];
+      const mix = (start, end) => start + (end - start) * t;
+      card.style.transform =
+        `translate(-50%, -50%) ` +
+        `translate(${mix(from.x * stageW * 1.5, slots[i].x)}px, ${mix(from.y * stageH * 1.5, slots[i].y)}px) ` +
+        `rotate(${mix(from.spin, 0)}deg) rotateX(${mix(from.tiltX, 0)}deg) ` +
+        `rotateY(${mix(from.tiltY, 0)}deg) scale(${mix(from.scale, 1)})`;
+      card.style.zIndex = t < 1 ? 2 + Math.round((1 - t) * 50) : 1; // flying cards pass over landed ones
+    });
+  }
+
+  function scrollProgress() {
+    const box = offClock.getBoundingClientRect();
+    return clamp(-box.top / (box.height - window.innerHeight));
+  }
+
+  let shown = null;
+  let onScreen = false;
+  let looping = false;
+
+  // Ease towards the scroll position every frame, so the motion glides
+  function animateClock() {
+    const target = scrollProgress();
+    shown = shown === null ? target : shown + (target - shown) * 0.12;
+    placeCards(shown);
+    if (onScreen || Math.abs(target - shown) > 0.001) {
+      requestAnimationFrame(animateClock);
+    } else {
+      looping = false;
+    }
+  }
+
+  layoutClockGrid();
+  placeCards(scrollProgress());
+
+  // Only animate while the section is on screen
+  new IntersectionObserver(([entry]) => {
+    onScreen = entry.isIntersecting;
+    if (onScreen && !looping) {
+      looping = true;
+      shown = null; // start from wherever the scroll is now
+      requestAnimationFrame(animateClock);
+    }
+  }).observe(offClock);
+
+  // Load the photos a little early, so none of them are blank while they fly in
+  new IntersectionObserver(
+    ([entry], observer) => {
+      if (entry.isIntersecting) {
+        cards.forEach((card) => (card.querySelector("img").loading = "eager"));
+        observer.disconnect();
+      }
+    },
+    { rootMargin: "1500px 0px" },
+  ).observe(offClock);
+
+  window.addEventListener("resize", () => {
+    layoutClockGrid();
+    placeCards(shown ?? scrollProgress());
   });
 }

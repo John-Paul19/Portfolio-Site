@@ -467,7 +467,7 @@ a:hover {
   }
 }
 
-/* ===== Section headings (shared by About, Skills, Projects, Contact) ===== */
+/* ===== Section headings (shared by About, Skills, Services, Contact) ===== */
 .section-head {
   margin-bottom: 3rem;
 }
@@ -528,11 +528,9 @@ a:hover {
   line-height: 1.5;
 }
 
-/* Player card: a dark HUD panel (the Skills weapon cards share this look) */
-.player-card,
-.weapon-card {
+/* Dark HUD panel: the player card, the Skills weapon cards and the GitHub card */
+.hud-panel {
   position: relative;
-  padding: 1.5rem 1.75rem;
   color: #fff;
   background-color: var(--charcoal);
   background-image:
@@ -544,10 +542,8 @@ a:hover {
 }
 
 /* HUD corner brackets */
-.player-card::before,
-.player-card::after,
-.weapon-card::before,
-.weapon-card::after {
+.hud-panel::before,
+.hud-panel::after {
   content: "";
   position: absolute;
   width: 18px;
@@ -556,18 +552,20 @@ a:hover {
   border-style: solid;
 }
 
-.player-card::before,
-.weapon-card::before {
+.hud-panel::before {
   top: 8px;
   right: 8px;
   border-width: 2px 2px 0 0;
 }
 
-.player-card::after,
-.weapon-card::after {
+.hud-panel::after {
   bottom: 8px;
   right: 8px;
   border-width: 0 2px 2px 0;
+}
+
+.player-card {
+  padding: 1.5rem 1.75rem;
 }
 
 .player-card-head {
@@ -647,14 +645,9 @@ a:hover {
   100% { box-shadow: 0 0 0 0 rgba(0, 178, 107, 0); }
 }
 
-/* ===== Off the clock: neon sign and photo reel ===== */
-#about {
-  padding-bottom: 0;   /* the dark band below closes the section */
-}
-
+/* ===== Off the clock: neon sign and photos (a dark band just before Contact) ===== */
 .off-clock {
   position: relative;
-  margin-top: 5rem;
   padding: 4.5rem 0 4rem;
   overflow: hidden;
   color: #fff;
@@ -726,109 +719,143 @@ a:hover {
   font-size: 1.05rem;
 }
 
-/* Photo reel: one long strip that slides left forever */
-.reel {
-  margin-top: 2.5rem;
-  overflow: hidden;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-}
-
-.reel-track {
-  display: flex;
-  width: max-content;
-  margin: 0;
-  padding: 1.75rem 0;   /* room for the tilt, glow and hover zoom */
+/* Photo grid. Without JavaScript (or with animations turned off) it is a plain grid */
+.clock-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  width: min(92%, 1100px);
+  margin: 2.5rem auto 0;
+  padding: 0;
   list-style: none;
-  animation: reel-scroll var(--reel-duration, 80s) linear infinite;
 }
 
-/* Hover (or tap on phones) pauses the reel */
-.reel:hover .reel-track {
-  animation-play-state: paused;
-}
-
-@keyframes reel-scroll {
-  to { transform: translateX(-50%); }
-}
-
-.reel-card {
+.clock-card {
   position: relative;
-  flex: none;
-  height: 280px;
-  aspect-ratio: 16 / 10;
-  margin-right: 1.75rem;   /* margin, not gap, so the loop lines up exactly */
+  aspect-ratio: 1;
   overflow: hidden;
+  background-color: #000;
   border: 2px solid #eafff3;
   border-radius: 12px;
   box-shadow:
     0 0 5px rgba(255, 255, 255, 0.7),
     0 0 16px rgba(57, 255, 154, 0.5),
     0 0 34px rgba(0, 178, 107, 0.3);
-  transform: rotate(-2deg);
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  transition: box-shadow 0.3s ease;
 }
 
-.reel-card:nth-child(even) {
+.clock-card:nth-child(even) {
   border-color: #7dffbd;
-  transform: rotate(2deg);
 }
 
-.reel-card.is-portrait {
-  aspect-ratio: 3 / 4;
-}
-
-.reel-card img {
+.clock-card img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.4s ease;
 }
 
-.reel-card:hover {
-  z-index: 2;
-  transform: rotate(0) scale(1.08);
+.clock-card:hover {
   box-shadow:
     0 0 8px #fff,
     0 0 24px rgba(57, 255, 154, 0.9),
     0 0 56px rgba(0, 178, 107, 0.6);
 }
 
-.reel-label {
+.clock-card:hover img {
+  transform: scale(1.06);
+}
+
+.clock-label {
   position: absolute;
   right: 0;
   bottom: 0;
   left: 0;
-  padding: 2.5rem 1rem 0.8rem;
+  padding: 1.25rem 0.5rem 0.45rem;
   font-family: var(--font-heading);
-  font-size: 1.1rem;
+  font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.06em;
+  line-height: 1.2;
+  letter-spacing: 0.05em;
   text-align: left;
   text-transform: uppercase;
   background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
 }
 
-.reel-tag {
+.clock-tag {
   display: block;
   color: #39ff9a;
-  font-size: 0.72rem;
+  font-size: 0.55rem;
   letter-spacing: 0.2em;
   text-shadow: 0 0 8px rgba(57, 255, 154, 0.8);
+}
+
+@media (min-width: 576px) {
+  .clock-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .clock-card {
+    aspect-ratio: 4 / 3;
+  }
+
+  .clock-label {
+    padding: 2rem 0.85rem 0.6rem;
+    font-size: 1rem;
+  }
+
+  .clock-tag {
+    font-size: 0.68rem;
+  }
+}
+
+/* Scatter mode (switched on by main.js): the section is a few screens tall and the stage
+   sticks in place while you scroll, so the thrown photos fly into the grid */
+.off-clock.is-scatter {
+  height: 280vh;
+  padding: 0;
+  overflow: visible;   /* sticky stops working inside a box that hides its overflow */
+}
+
+.off-clock.is-scatter .off-clock-stage {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100svh;
+  padding: 5.5rem 0 1.5rem;   /* the top clears the navbar */
+  overflow: hidden;
+  background: inherit;
+}
+
+.off-clock.is-scatter .neon-sign {
+  font-size: clamp(1.9rem, 5vw, 3.5rem);
+}
+
+.off-clock.is-scatter .clock-grid {
+  position: relative;
+  display: block;
+  flex: 1;
+  margin-top: 1.5rem;
+  perspective: 1200px;
+}
+
+/* main.js sets each card's size and moves it with a transform */
+.off-clock.is-scatter .clock-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--cw);
+  height: var(--ch);
+  will-change: transform;
 }
 
 @media (max-width: 767.98px) {
   .off-clock {
     padding: 3.5rem 0 3rem;
-  }
-
-  .reel-card {
-    height: 200px;
-    margin-right: 1.25rem;
-  }
-
-  .reel-label {
-    font-size: 0.95rem;
   }
 }
 
@@ -838,23 +865,7 @@ a:hover {
     animation: none;
   }
 
-  /* No sliding: the photos become a row you can swipe through */
-  .reel {
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-mask-image: none;
-    mask-image: none;
-  }
-
-  .reel-track {
-    padding-inline: 1rem;
-    animation: none;
-  }
-
-  .reel-card,
-  .reel-card:nth-child(even),
-  .reel-card:hover {
-    scroll-snap-align: center;
+  .clock-card:hover img {
     transform: none;
   }
 }
@@ -1304,6 +1315,370 @@ a:hover {
 
 @media (prefers-reduced-motion: reduce) {
   .tool:hover {
+    transform: none;
+  }
+}
+
+/* ===== Services: mission select ===== */
+.services {
+  background-color: var(--surface);
+}
+
+/* Mission cards */
+.mission-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1.75rem 1.5rem 1.5rem;
+  background-color: #fff;
+  border: 1px solid var(--border);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Green bar along the top: short at rest, full width when the mission is selected */
+.mission-card::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: calc(100% + 2px);
+  height: 4px;
+  background-color: var(--green);
+  transform: scaleX(0.2);
+  transform-origin: left;
+  transition: transform 0.35s ease;
+}
+
+.mission-card:hover,
+.mission-card:focus-within {
+  border-color: var(--green);
+  box-shadow: 0 18px 40px rgba(13, 26, 19, 0.12);
+  transform: translateY(-6px);
+}
+
+.mission-card:hover::before,
+.mission-card:focus-within::before {
+  transform: scaleX(1);
+}
+
+.mission-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.mission-num {
+  color: var(--green);
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.mission-icon {
+  width: 2.25rem;
+  height: 2.25rem;
+  color: var(--green);
+}
+
+.mission-name {
+  margin-bottom: 0.6rem;
+  font-family: "Archivo", var(--font-heading);
+  font-size: 1.35rem;
+  font-style: italic;
+  font-stretch: 125%;
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: 0;
+}
+
+.mission-brief {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.mission-label {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.4rem;
+  color: var(--heading);
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* Thin line from the label to the card edge */
+.mission-label::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background-color: var(--border);
+}
+
+.mission-list {
+  margin: 0 0 1.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.mission-list li {
+  position: relative;
+  padding: 0.3rem 0 0.3rem 1.25rem;
+  font-size: 0.95rem;
+}
+
+/* Small green diamond bullets */
+.mission-list li::before {
+  content: "";
+  position: absolute;
+  top: 0.84rem;
+  left: 0.15rem;
+  width: 0.45rem;
+  height: 0.45rem;
+  background-color: var(--green);
+  transform: rotate(45deg);
+}
+
+.mission-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: auto;   /* buttons line up along the bottom of every card */
+  padding: 0.7rem 1rem;
+  color: var(--green);
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  text-transform: uppercase;
+  border: 2px solid var(--green);
+  border-radius: 2px;
+  transition: color 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.mission-btn svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  transition: transform 0.25s ease;
+}
+
+.mission-card:hover .mission-btn,
+.mission-btn:focus-visible {
+  color: #fff;
+  background-color: var(--green);
+}
+
+.mission-btn:hover {
+  color: #fff;
+  background-color: var(--green-dark);
+  border-color: var(--green-dark);
+}
+
+.mission-card:hover .mission-btn svg {
+  transform: translateX(4px);
+}
+
+.mission-btn:focus-visible {
+  outline: 3px solid rgba(0, 135, 81, 0.35);
+  outline-offset: 2px;
+}
+
+/* How I work: four stages joined by a dashed track */
+.process {
+  margin-top: 4.5rem;
+}
+
+.process .kit-title {
+  margin-bottom: 2rem;
+}
+
+.process-steps {
+  display: grid;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.process-step {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+/* Diamond node with the stage number */
+.step-node {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  color: #fff;
+  background-color: var(--green);
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  transition: background-color 0.25s ease;
+}
+
+.process-step:hover .step-node {
+  background-color: var(--charcoal);
+}
+
+.step-name {
+  display: block;
+  color: var(--heading);
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.process-step p {
+  margin: 0.2rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+/* The track runs down on phones and tablets, and across on desktops */
+.process-step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 3.75rem;
+  bottom: -1rem;
+  left: calc(1.625rem - 1px);
+  width: 2px;
+  background-image: repeating-linear-gradient(180deg, var(--green) 0 6px, transparent 6px 11px);
+}
+
+@media (min-width: 992px) {
+  .process-steps {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .process-step {
+    flex-direction: column;
+  }
+
+  .process-step:not(:last-child)::after {
+    top: calc(1.625rem - 1px);
+    right: -1rem;
+    bottom: auto;
+    left: 3.75rem;
+    width: auto;
+    height: 2px;
+    background-image: repeating-linear-gradient(90deg, var(--green) 0 6px, transparent 6px 11px);
+  }
+}
+
+/* GitHub call-to-action */
+.github-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.5rem 2rem;
+  margin-top: 4.5rem;
+  padding: 2rem 3rem 2rem 2rem;   /* extra on the right clears the corner brackets */
+  box-shadow: 0 18px 40px rgba(13, 26, 19, 0.16);
+}
+
+.github-mark {
+  flex: none;
+  width: 4rem;
+  height: 4rem;
+  fill: currentColor;
+}
+
+.github-text {
+  flex: 1 1 20rem;
+}
+
+.github-label {
+  margin-bottom: 0.25rem;
+  color: var(--green-bright);
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.github-title {
+  margin-bottom: 0.4rem;
+  color: #fff;
+  font-family: "Archivo", var(--font-heading);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-style: italic;
+  font-stretch: 125%;
+  font-weight: 900;
+  letter-spacing: 0;
+}
+
+.github-text p:last-child {
+  margin: 0;
+  color: #9db3a7;
+}
+
+.btn-github {
+  --bs-btn-padding-x: 1.75rem;
+  --bs-btn-padding-y: 0.8rem;
+  --bs-btn-color: var(--charcoal);
+  --bs-btn-bg: #fff;
+  --bs-btn-border-color: #fff;
+  --bs-btn-hover-color: var(--charcoal);
+  --bs-btn-hover-bg: var(--green-bright);
+  --bs-btn-hover-border-color: var(--green-bright);
+  --bs-btn-active-color: var(--charcoal);
+  --bs-btn-active-bg: var(--green-bright);
+  --bs-btn-active-border-color: var(--green-bright);
+  --bs-btn-border-width: 2px;
+  --bs-btn-border-radius: 2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.btn-github svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.btn-github:focus-visible {
+  outline: 3px solid var(--green-bright);
+  outline-offset: 3px;
+  box-shadow: none;
+}
+
+@media (max-width: 575.98px) {
+  .github-card {
+    padding: 1.75rem 1.5rem;
+  }
+
+  .btn-github {
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mission-card:hover,
+  .mission-card:focus-within {
     transform: none;
   }
 }
