@@ -1,14 +1,18 @@
 // ===== Navbar =====
 const nav = document.querySelector(".site-nav");
 const navMenu = document.getElementById("navMenu");
+const scrollBar = nav.querySelector(".scroll-progress");
 
-// Soft shadow under the navbar once the page is scrolled
-function updateNavShadow() {
+// Soft shadow under the navbar once the page is scrolled, and the progress bar
+function updateNav() {
   nav.classList.toggle("scrolled", window.scrollY > 10);
+  const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+  scrollBar.style.setProperty("--scroll", scrollable > 0 ? window.scrollY / scrollable : 0);
 }
 
-updateNavShadow();
-window.addEventListener("scroll", updateNavShadow, { passive: true });
+updateNav();
+window.addEventListener("scroll", updateNav, { passive: true });
+window.addEventListener("resize", updateNav);
 
 // On phones, close the dropdown menu after a link is tapped
 nav.querySelectorAll('a[href^="#"]').forEach((link) => {
@@ -496,3 +500,29 @@ document.querySelectorAll(".copy-btn").forEach((button) => {
 
 // ===== Footer: keep the copyright year current =====
 document.getElementById("year").textContent = new Date().getFullYear();
+
+// ===== Scroll reveal: sections fade and slide in as they come into view =====
+const revealItems = document.querySelectorAll("[data-reveal]");
+
+if (revealItems.length && !reduceMotion) {
+  document.documentElement.classList.add("reveal-ready");
+
+  // Items side by side (cards, stages) come in one after another
+  revealItems.forEach((item) => {
+    const group = [...item.parentElement.children].filter((el) => el.hasAttribute("data-reveal"));
+    item.style.setProperty("--reveal-delay", `${group.indexOf(item) * 0.12}s`);
+  });
+
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { rootMargin: "0px 0px -10% 0px" },
+  );
+  revealItems.forEach((item) => revealObserver.observe(item));
+}

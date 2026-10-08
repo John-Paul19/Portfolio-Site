@@ -9,6 +9,8 @@
       content="Iguegbe Enyiolisa John-Paul is a full-stack web developer building fast, responsive websites with HTML, CSS, JavaScript, Node.js and Python."
     />
     <meta name="theme-color" content="#008751" />
+    <link rel="icon" type="image/png" href="assets/img/favicon.png" />
+    <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png" />
 
     <!-- Fonts: Rajdhani (headings), Inter (body), Archivo Expanded Black Italic (logo) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -346,6 +348,7 @@
           <a class="btn btn-hire ms-lg-3" href="#contact">Hire Me</a>
         </div>
       </div>
+      <div class="scroll-progress" aria-hidden="true"></div>
     </nav>
 
     <!-- Hero -->
@@ -421,13 +424,13 @@
       <!-- About -->
       <section id="about">
         <div class="container">
-          <div class="section-head">
+          <div class="section-head" data-reveal>
             <p class="section-label"><span>01</span> / About</p>
             <h2 class="section-title">Player Profile</h2>
           </div>
 
           <div class="row g-4 g-lg-5 align-items-center">
-            <div class="col-lg-7">
+            <div class="col-lg-7" data-reveal>
               <div class="about-bio">
                 <p class="about-lead">
                   I'm John-Paul, a Nigerian full-stack web developer who builds
@@ -449,7 +452,7 @@
               </div>
             </div>
 
-            <div class="col-lg-5">
+            <div class="col-lg-5" data-reveal>
               <aside class="player-card hud-panel" aria-label="Player card">
                 <div class="player-card-head">
                   <span>Player card</span>
@@ -488,10 +491,17 @@
         </div>
       </section>
 
+      <!-- AMG-grille divider in flag colours: green, silver, green -->
+      <div class="grille-divider" aria-hidden="true" data-reveal>
+        <span class="grille grille-green"></span>
+        <span class="grille grille-silver"></span>
+        <span class="grille grille-green"></span>
+      </div>
+
       <!-- Skills: a game-style loadout screen -->
       <section id="skills" class="skills">
         <div class="container">
-          <div class="section-head">
+          <div class="section-head" data-reveal>
             <p class="section-label"><span>02</span> / Skills</p>
             <h2 class="section-title">Loadout</h2>
             <p class="section-lead">
@@ -730,7 +740,7 @@
       <!-- Services: mission select -->
       <section id="services" class="services">
         <div class="container">
-          <div class="section-head">
+          <div class="section-head" data-reveal>
             <p class="section-label"><span>03</span> / Services</p>
             <h2 class="section-title">Choose Your Mission</h2>
             <p class="section-lead">
@@ -741,7 +751,7 @@
 
           <!-- data-mission is for the contact form (Phase 7) to know which mission was picked -->
           <div class="row g-4">
-            <div class="col-md-6 col-xl-3">
+            <div class="col-md-6 col-xl-3" data-reveal>
               <article class="mission-card">
                 <div class="mission-top">
                   <span class="mission-num">Mission 01</span>
@@ -773,7 +783,7 @@
               </article>
             </div>
 
-            <div class="col-md-6 col-xl-3">
+            <div class="col-md-6 col-xl-3" data-reveal>
               <article class="mission-card">
                 <div class="mission-top">
                   <span class="mission-num">Mission 02</span>
@@ -805,7 +815,7 @@
               </article>
             </div>
 
-            <div class="col-md-6 col-xl-3">
+            <div class="col-md-6 col-xl-3" data-reveal>
               <article class="mission-card">
                 <div class="mission-top">
                   <span class="mission-num">Mission 03</span>
@@ -837,7 +847,7 @@
               </article>
             </div>
 
-            <div class="col-md-6 col-xl-3">
+            <div class="col-md-6 col-xl-3" data-reveal>
               <article class="mission-card">
                 <div class="mission-top">
                   <span class="mission-num">Mission 04</span>
@@ -874,7 +884,7 @@
           <div class="process">
             <h3 class="kit-title">How I Work</h3>
             <ol class="process-steps">
-              <li class="process-step">
+              <li class="process-step" data-reveal>
                 <span class="step-node" aria-hidden="true">01</span>
                 <div>
                   <span class="step-name">Brief</span>
@@ -884,7 +894,7 @@
                   </p>
                 </div>
               </li>
-              <li class="process-step">
+              <li class="process-step" data-reveal>
                 <span class="step-node" aria-hidden="true">02</span>
                 <div>
                   <span class="step-name">Build</span>
@@ -894,7 +904,7 @@
                   </p>
                 </div>
               </li>
-              <li class="process-step">
+              <li class="process-step" data-reveal>
                 <span class="step-node" aria-hidden="true">03</span>
                 <div>
                   <span class="step-name">Review</span>
@@ -904,7 +914,7 @@
                   </p>
                 </div>
               </li>
-              <li class="process-step">
+              <li class="process-step" data-reveal>
                 <span class="step-node" aria-hidden="true">04</span>
                 <div>
                   <span class="step-name">Launch</span>
@@ -915,7 +925,7 @@
           </div>
 
           <!-- GitHub: where visitors can see the code -->
-          <div class="github-card hud-panel">
+          <div class="github-card hud-panel" data-reveal>
             <svg class="github-mark" aria-hidden="true">
               <use href="#i-github" />
             </svg>
@@ -1108,7 +1118,7 @@
       <!-- Contact: the green band at the bottom. main.js fills in the message when a mission is picked -->
       <section id="contact" class="contact green-band">
         <div class="container">
-          <div class="section-head">
+          <div class="section-head" data-reveal>
             <p class="section-label"><span>04</span> / Contact</p>
             <h2 class="section-title">Let's Build Something</h2>
             <p class="section-lead">
@@ -1130,7 +1140,7 @@
 
           <div class="row g-4">
             <!-- WhatsApp -->
-            <div class="col-lg-6">
+            <div class="col-lg-6" data-reveal>
               <div class="contact-card hud-panel">
                 <div class="contact-card-head">
                   <span class="contact-icon"
@@ -1161,7 +1171,7 @@
             </div>
 
             <!-- Email -->
-            <div class="col-lg-6">
+            <div class="col-lg-6" data-reveal>
               <div class="contact-card hud-panel">
                 <div class="contact-card-head">
                   <span class="contact-icon"
@@ -1211,7 +1221,7 @@
           </div>
 
           <!-- Socials -->
-          <div class="socials">
+          <div class="socials" data-reveal>
             <p class="socials-label">Follow me</p>
             <a
               class="social-link"
@@ -1307,8 +1317,8 @@
 
         <div class="footer-bottom">
           <p>
-            &copy; <span id="year">2026</span> Iguegbe Enyiolisa John-Paul,
-            Designed and built from scratch.
+            &copy; <span id="year">2026</span> Iguegbe Enyiolisa John-Paul
+            <br />Designed and built from scratch.
           </p>
           <a class="back-to-top" href="#home">
             Back to top<svg aria-hidden="true"><use href="#i-arrow-up" /></svg>

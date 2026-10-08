@@ -66,6 +66,18 @@ a:hover {
   transition: box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
+/* Thin green bar under the navbar that fills as you scroll down the page */
+.scroll-progress {
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--green), var(--green-bright));
+  transform: scaleX(var(--scroll, 0));
+  transform-origin: left;
+}
+
 .site-nav.scrolled {
   border-bottom-color: var(--border);
   box-shadow: 0 6px 24px rgba(13, 26, 19, 0.08);
@@ -493,11 +505,14 @@ a:hover {
   text-transform: uppercase;
 }
 
+/* Mini AMG grille in flag colours (green, silver, green): nine bars of 3px */
 .section-label::before {
   content: "";
-  width: 2.5rem;
-  height: 2px;
-  background-color: var(--green);
+  width: 2.6875rem;
+  height: 0.85rem;
+  background: linear-gradient(90deg, var(--green) 0 33.3%, #b5c3bb 33.3% 66.6%, var(--green) 66.6%);
+  -webkit-mask-image: repeating-linear-gradient(90deg, #000 0 3px, transparent 3px 5px);
+  mask-image: repeating-linear-gradient(90deg, #000 0 3px, transparent 3px 5px);
 }
 
 .section-label span {
@@ -521,6 +536,126 @@ a:hover {
   margin: 1rem 0 0;
   color: var(--text-muted);
   font-size: 1.1rem;
+}
+
+/* ===== Scroll reveal =====
+   main.js adds .reveal-ready to <html>, then .is-visible to each [data-reveal] element as it
+   scrolls into view, so nothing is hidden without JavaScript. The slide uses translate (not
+   transform), so hover lifts on cards still work */
+.reveal-ready [data-reveal]:not(.is-visible) {
+  opacity: 0;
+}
+
+.reveal-ready [data-reveal].is-visible {
+  animation: reveal 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) var(--reveal-delay, 0s) both;
+}
+
+@keyframes reveal {
+  from { opacity: 0; translate: 0 2rem; }
+  to   { opacity: 1; translate: 0 0; }
+}
+
+/* Section titles wipe in from the left, like a car flashing past */
+.reveal-ready .section-head.is-visible .section-title {
+  animation: title-wipe 0.9s cubic-bezier(0.7, 0, 0.2, 1) 0.15s both;
+}
+
+@keyframes title-wipe {
+  from { clip-path: polygon(-5% -20%, -5% -20%, -5% 120%, -5% 120%); translate: -1.5rem 0; }
+  to   { clip-path: polygon(-5% -20%, 105% -20%, 105% 120%, -5% 120%); translate: 0 0; }
+}
+
+/* How I work: each stage's dashed track draws on to the next stage */
+.reveal-ready .process-step.is-visible::after {
+  animation: track-down 0.6s ease-out calc(var(--reveal-delay, 0s) + 0.35s) both;
+}
+
+@keyframes track-down {
+  from { scale: 1 0; }
+  to   { scale: 1 1; }
+}
+
+@keyframes track-across {
+  from { scale: 0 1; }
+  to   { scale: 1 1; }
+}
+
+@media (min-width: 992px) {
+  .reveal-ready .process-step.is-visible::after {
+    animation-name: track-across;
+  }
+}
+
+/* ===== AMG grille divider (between About and Skills) ===== */
+.grille-divider {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  max-width: 1140px;
+  height: 1.75rem;
+  margin: -1.5rem auto;   /* sits in the white space between the two sections */
+  padding: 0 0.75rem;
+}
+
+/* Thin rule running out to each side, with a gap for the grille */
+.grille-divider::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  left: 0.75rem;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--border) 15%,
+    var(--border) calc(50% - 6.5rem),
+    transparent calc(50% - 6.5rem),
+    transparent calc(50% + 6.5rem),
+    var(--border) calc(50% + 6.5rem),
+    var(--border) 85%,
+    transparent
+  );
+}
+
+/* Each group is eight vertical bars, like a Panamericana grille */
+.grille {
+  width: 3.5rem;
+  height: 100%;
+  transform-origin: bottom;
+  -webkit-mask-image: repeating-linear-gradient(90deg, #000 0 4px, transparent 4px 7px);
+  mask-image: repeating-linear-gradient(90deg, #000 0 4px, transparent 4px 7px);
+}
+
+.grille-green {
+  background: linear-gradient(180deg, var(--green-bright), var(--green-dark));
+}
+
+.grille-silver {
+  background: linear-gradient(180deg, #f2f5f3, #9fb0a7);
+}
+
+/* On reveal the bars rise one group after another, and the rule runs out from the middle */
+.reveal-ready .grille-divider.is-visible .grille {
+  animation: grille-rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.reveal-ready .grille-divider.is-visible .grille:nth-child(2) { animation-delay: 0.1s; }
+.reveal-ready .grille-divider.is-visible .grille:nth-child(3) { animation-delay: 0.2s; }
+
+.reveal-ready .grille-divider.is-visible::before {
+  animation: rule-out 1s ease-out 0.2s both;
+}
+
+@keyframes grille-rise {
+  from { scale: 1 0; }
+  to   { scale: 1 1; }
+}
+
+@keyframes rule-out {
+  from { scale: 0 1; }
+  to   { scale: 1 1; }
 }
 
 /* ===== About ===== */
@@ -1568,6 +1703,7 @@ a:hover {
   left: calc(1.625rem - 1px);
   width: 2px;
   background-image: repeating-linear-gradient(180deg, var(--green) 0 6px, transparent 6px 11px);
+  transform-origin: top;
 }
 
 @media (min-width: 992px) {
@@ -1587,6 +1723,7 @@ a:hover {
     width: auto;
     height: 2px;
     background-image: repeating-linear-gradient(90deg, var(--green) 0 6px, transparent 6px 11px);
+    transform-origin: left;
   }
 }
 
@@ -1698,7 +1835,7 @@ a:hover {
 }
 
 .contact .section-label::before {
-  background-color: #fff;
+  background: linear-gradient(90deg, #7be0b0 0 33.3%, #fff 33.3% 66.6%, #7be0b0 66.6%);
 }
 
 .contact .section-lead {
