@@ -19,6 +19,8 @@ from top to bottom.
   WhatsApp and email message in the Contact section.
 - **Off the clock:** photos of what I'm into, which fly in from all directions
   and snap into a grid as you scroll.
+- **FAQ:** answers to common client questions about timelines, revisions,
+  hosting and support.
 - **Contact:** WhatsApp, email (with copy and Gmail options) and my socials.
 
 Animations run as you scroll and switch off for anyone who turns on "reduce
