@@ -1,20 +1,34 @@
+/*
+ * Portfolio: Iguegbe Enyiolisa John-Paul
+ * Interactive behaviour: navbar, hero typing and ASCII portrait, scroll reveals,
+ * the Skills and Off the clock animations, and the contact links.
+ * All motion is skipped when the user prefers reduced motion.
+ */
+
+const reduceMotion = window.matchMedia(
+  "(prefers-reduced-motion: reduce)",
+).matches;
+
 // ===== Navbar =====
 const nav = document.querySelector(".site-nav");
 const navMenu = document.getElementById("navMenu");
 const scrollBar = nav.querySelector(".scroll-progress");
 
-// Soft shadow under the navbar once the page is scrolled, and the progress bar
+// Shadow once the page is scrolled, plus the scroll-progress bar
 function updateNav() {
   nav.classList.toggle("scrolled", window.scrollY > 10);
   const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-  scrollBar.style.setProperty("--scroll", scrollable > 0 ? window.scrollY / scrollable : 0);
+  scrollBar.style.setProperty(
+    "--scroll",
+    scrollable > 0 ? window.scrollY / scrollable : 0,
+  );
 }
 
 updateNav();
 window.addEventListener("scroll", updateNav, { passive: true });
 window.addEventListener("resize", updateNav);
 
-// On phones, close the dropdown menu after a link is tapped
+// Collapse the mobile menu after a link is selected
 nav.querySelectorAll('a[href^="#"]').forEach((link) => {
   link.addEventListener("click", () => {
     if (navMenu.classList.contains("show")) {
@@ -23,7 +37,35 @@ nav.querySelectorAll('a[href^="#"]').forEach((link) => {
   });
 });
 
-// ===== Hero typing effect =====
+// ===== Scroll reveal =====
+const revealItems = document.querySelectorAll("[data-reveal]");
+
+if (revealItems.length && !reduceMotion) {
+  document.documentElement.classList.add("reveal-ready");
+
+  // Stagger siblings (cards, steps) that reveal together
+  revealItems.forEach((item) => {
+    const group = [...item.parentElement.children].filter((el) =>
+      el.hasAttribute("data-reveal"),
+    );
+    item.style.setProperty("--reveal-delay", `${group.indexOf(item) * 0.12}s`);
+  });
+
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { rootMargin: "0px 0px -10% 0px" },
+  );
+  revealItems.forEach((item) => revealObserver.observe(item));
+}
+
+// ===== Hero: typing effect =====
 const typedLines = [
   "Full-Stack Web Developer",
   "Loadout: HTML · CSS · JS · Node · Pyth",
@@ -32,12 +74,8 @@ const typedLines = [
 ];
 
 const typedEl = document.getElementById("typed");
-const reduceMotion = window.matchMedia(
-  "(prefers-reduced-motion: reduce)",
-).matches;
 
 if (reduceMotion) {
-  // No animation: just show the first line
   typedEl.textContent = typedLines[0];
 } else {
   let lineIndex = 0;
@@ -52,11 +90,11 @@ if (reduceMotion) {
     let delay = deleting ? 35 : 70;
 
     if (!deleting && charIndex === line.length) {
-      // Finished typing: hold the line, then start deleting
+      // Line complete: hold, then delete
       deleting = true;
       delay = 1800;
     } else if (deleting && charIndex === 0) {
-      // Finished deleting: move to the next line
+      // Line cleared: move to the next one
       deleting = false;
       lineIndex = (lineIndex + 1) % typedLines.length;
       delay = 400;
@@ -68,20 +106,19 @@ if (reduceMotion) {
   setTimeout(typeStep, 800);
 }
 
-// ===== Hero ASCII portrait =====
-// The photo is stored as rows of characters in portrait-ascii.js. Every character is a
-// particle: they fly in and form the portrait, shimmer, and scatter away from the cursor.
+// ===== Hero: ASCII portrait =====
+// Each character of the pre-rendered portrait (portrait-ascii.js) is a particle that
+// assembles into place, shimmers, and is pushed away by the pointer.
 const portraitCanvas = document.getElementById("portrait");
 
 if (portraitCanvas && typeof PORTRAIT_ASCII !== "undefined") {
   const ctx = portraitCanvas.getContext("2d");
   const { font, colGap, rowGap, chars, rows } = PORTRAIT_ASCII;
-  const BASE = 400; // particles live in a 400 x 400 space, scaled to the canvas size
-  const FADE_ROWS = 8; // the bottom rows fade out instead of ending in a hard line
+  const BASE = 400; // logical size of the drawing space, scaled to the canvas
+  const FADE_ROWS = 8; // bottom rows that fade out
   const WHITE = "#ffffff";
   const LIGHT_GREEN = "#b8f0d4";
 
-  // Centre the portrait in the 400 x 400 space
   const offsetX =
     (BASE - Math.max(...rows.map((row) => row.length)) * colGap) / 2;
   const offsetY = (BASE - rows.length * rowGap) / 2;
@@ -90,14 +127,14 @@ if (portraitCanvas && typeof PORTRAIT_ASCII !== "undefined") {
   rows.forEach((row, r) => {
     [...row].forEach((char, c) => {
       if (char === " ") return;
-      const density = chars.indexOf(char) / (chars.length - 1); // 0 = light, 1 = dense
+      const density = chars.indexOf(char) / (chars.length - 1); // 0 light, 1 dense
       const targetX = offsetX + c * colGap + colGap / 2;
       const targetY = offsetY + r * rowGap + rowGap / 2;
       particles.push({
         char,
         targetX,
         targetY,
-        x: targetX + (Math.random() - 0.5) * BASE, // start scattered
+        x: targetX + (Math.random() - 0.5) * BASE,
         y: targetY + (Math.random() - 0.5) * BASE,
         vx: 0,
         vy: 0,
@@ -111,7 +148,7 @@ if (portraitCanvas && typeof PORTRAIT_ASCII !== "undefined") {
     });
   });
 
-  // Draw light-green characters first, then white, so the colour only switches once
+  // Group by colour so fillStyle changes once per frame
   particles.sort((a, b) =>
     a.color === b.color ? 0 : a.color === LIGHT_GREEN ? -1 : 1,
   );
@@ -152,7 +189,6 @@ if (portraitCanvas && typeof PORTRAIT_ASCII !== "undefined") {
   window.addEventListener("resize", resizePortrait);
 
   if (reduceMotion) {
-    // No animation: show the finished portrait
     particles.forEach((p) => {
       p.x = p.targetX;
       p.y = p.targetY;
@@ -173,11 +209,11 @@ if (portraitCanvas && typeof PORTRAIT_ASCII !== "undefined") {
       if (startTime === null) startTime = now;
       const elapsed = (now - startTime) / 1000;
 
-      // Ease the pointer so the scatter follows it smoothly
+      // Smooth the pointer position
       pointer.x += (pointer.targetX - pointer.x) * 0.15;
       pointer.y += (pointer.targetY - pointer.y) * 0.15;
 
-      const lively = pointer.active || elapsed < 3; // shimmer during the intro and while touched
+      const lively = pointer.active || elapsed < 3; // intro or active interaction
       const reach = BASE * 0.2;
       let stillMoving = false;
 
@@ -193,7 +229,7 @@ if (portraitCanvas && typeof PORTRAIT_ASCII !== "undefined") {
         const shimmer = lively ? Math.sin(elapsed * 2 + p.phase) * 0.1 : 0;
         p.shown = Math.max(0, p.alpha * appear + shimmer);
 
-        // Push away from the pointer
+        // Repel from the pointer
         if (pointer.active) {
           const dx = p.x - pointer.x;
           const dy = p.y - pointer.y;
@@ -205,13 +241,13 @@ if (portraitCanvas && typeof PORTRAIT_ASCII !== "undefined") {
           }
         }
 
-        // Pull back towards its place in the portrait
+        // Spring back to the target position
         const pull = 0.01 + settle * 0.08;
         p.vx += (p.targetX - p.x) * pull;
         p.vy += (p.targetY - p.y) * pull;
 
         if (lively) {
-          // Gentle drift, like breathing
+          // Ambient drift
           p.vx += Math.sin(elapsed * 0.5 + p.targetY * 0.1) * 0.15;
           p.vy += Math.cos(elapsed * 0.5 + p.targetX * 0.1) * 0.15;
           p.vx *= 0.92;
@@ -233,7 +269,7 @@ if (portraitCanvas && typeof PORTRAIT_ASCII !== "undefined") {
       }
 
       if (!lively && !stillMoving) {
-        // Everything has settled: snap into place and stop until the pointer comes back
+        // Settled: snap to the targets and stop until the next interaction
         particles.forEach((p) => {
           p.x = p.targetX;
           p.y = p.targetY;
@@ -277,7 +313,7 @@ if (portraitCanvas && typeof PORTRAIT_ASCII !== "undefined") {
     portraitCanvas.addEventListener("pointerup", releasePointer);
     portraitCanvas.addEventListener("pointercancel", releasePointer);
 
-    // Pause when the hero is scrolled out of view
+    // Pause while the hero is off screen
     new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting;
       startPortrait();
@@ -285,7 +321,7 @@ if (portraitCanvas && typeof PORTRAIT_ASCII !== "undefined") {
   }
 }
 
-// ===== Skills: "equip" each loadout panel when it scrolls into view =====
+// ===== Skills: staggered "equip" animation =====
 const loadoutPanels = document.querySelectorAll(".loadout-panel");
 
 if (loadoutPanels.length && !reduceMotion) {
@@ -302,7 +338,7 @@ if (loadoutPanels.length && !reduceMotion) {
   );
 
   loadoutPanels.forEach((panel) => {
-    // Number the items so they equip one after another
+    // Item index drives the stagger delay in CSS
     panel.querySelectorAll(".equip-item").forEach((item, i) => {
       item.style.setProperty("--i", i);
     });
@@ -311,9 +347,9 @@ if (loadoutPanels.length && !reduceMotion) {
   });
 }
 
-// ===== Off the clock: thrown photos fly into a grid as you scroll =====
-// The section is a few screens tall and its stage sticks in place, so scrolling through
-// it plays the animation (and scrolling back up rewinds it).
+// ===== Off the clock: scroll-driven scatter-to-grid =====
+// The section becomes a tall scroll track with a sticky stage. Scroll progress through
+// it moves each card from a scattered 3D position into its grid slot (and back).
 const offClock = document.querySelector(".off-clock");
 
 if (offClock && !reduceMotion) {
@@ -323,7 +359,7 @@ if (offClock && !reduceMotion) {
   const clamp = (value) => Math.min(1, Math.max(0, value));
   const easeOut = (t) => 1 - Math.pow(1 - t, 3);
 
-  // A fixed "random" throw for every photo, the same on every visit
+  // Seeded PRNG so the scattered layout is the same on every load
   let seed = 7;
   const random = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
   const throws = cards.map(() => ({
@@ -335,7 +371,7 @@ if (offClock && !reduceMotion) {
     scale: 0.7 + random() * 0.9,
   }));
 
-  // Shuffle the order the photos land in
+  // Seeded shuffle of the landing order
   const landStep = cards.map((_, i) => i);
   for (let i = landStep.length - 1; i > 0; i--) {
     const j = Math.floor(random() * (i + 1));
@@ -348,7 +384,7 @@ if (offClock && !reduceMotion) {
 
   offClock.classList.add("is-scatter");
 
-  // Size the cards and work out each one's place in the finished grid
+  // Card size and final grid position for each card
   function layoutClockGrid() {
     stageW = stage.clientWidth;
     stageH = stage.clientHeight;
@@ -356,7 +392,7 @@ if (offClock && !reduceMotion) {
     const cols = small ? 3 : 4;
     const rows = Math.ceil(cards.length / cols);
     const gap = small ? 8 : 16;
-    const ratio = small ? 1 : 0.75; // square cards on phones, 4:3 on bigger screens
+    const ratio = small ? 1 : 0.75; // 1:1 on phones, 4:3 otherwise
     const cardW = Math.min(
       (grid.clientWidth - gap * (cols - 1)) / cols,
       (grid.clientHeight - gap * (rows - 1)) / rows / ratio,
@@ -373,7 +409,7 @@ if (offClock && !reduceMotion) {
     }));
   }
 
-  // progress 0 = every photo thrown and tumbling, 1 = all of them in the grid
+  // progress: 0 = fully scattered, 1 = fully assembled
   function placeCards(progress) {
     cards.forEach((card, i) => {
       const t = easeOut(clamp((progress * 1.55 - landStep[i] * 0.045) / 0.6));
@@ -384,7 +420,7 @@ if (offClock && !reduceMotion) {
         `translate(${mix(from.x * stageW * 1.5, slots[i].x)}px, ${mix(from.y * stageH * 1.5, slots[i].y)}px) ` +
         `rotate(${mix(from.spin, 0)}deg) rotateX(${mix(from.tiltX, 0)}deg) ` +
         `rotateY(${mix(from.tiltY, 0)}deg) scale(${mix(from.scale, 1)})`;
-      card.style.zIndex = t < 1 ? 2 + Math.round((1 - t) * 50) : 1; // flying cards pass over landed ones
+      card.style.zIndex = t < 1 ? 2 + Math.round((1 - t) * 50) : 1; // in-flight cards on top
     });
   }
 
@@ -397,7 +433,7 @@ if (offClock && !reduceMotion) {
   let onScreen = false;
   let looping = false;
 
-  // Ease towards the scroll position every frame, so the motion glides
+  // Ease toward the scroll position each frame
   function animateClock() {
     const target = scrollProgress();
     shown = shown === null ? target : shown + (target - shown) * 0.12;
@@ -412,17 +448,17 @@ if (offClock && !reduceMotion) {
   layoutClockGrid();
   placeCards(scrollProgress());
 
-  // Only animate while the section is on screen
+  // Run the loop only while the section is on screen
   new IntersectionObserver(([entry]) => {
     onScreen = entry.isIntersecting;
     if (onScreen && !looping) {
       looping = true;
-      shown = null; // start from wherever the scroll is now
+      shown = null; // resync to the current scroll position
       requestAnimationFrame(animateClock);
     }
   }).observe(offClock);
 
-  // Load the photos a little early, so none of them are blank while they fly in
+  // Switch the images to eager loading shortly before the section is reached
   new IntersectionObserver(
     ([entry], observer) => {
       if (entry.isIntersecting) {
@@ -439,12 +475,12 @@ if (offClock && !reduceMotion) {
   });
 }
 
-// ===== Contact: WhatsApp and email messages about the picked mission =====
+// ===== Contact: pre-filled WhatsApp and email messages =====
 const WHATSAPP_NUMBER = "2348146776126";
 const EMAIL = "ienyiolisa@gmail.com";
 const missionChip = document.querySelector(".mission-chip");
 
-// Point the WhatsApp, email and Gmail buttons at a ready-made message
+// Point the contact links at a message for the selected service (or a general one)
 function setMission(mission) {
   const message = mission
     ? `Hi John-Paul, I'm interested in your ${mission} service.`
@@ -455,18 +491,24 @@ function setMission(mission) {
 
   document.querySelectorAll("[data-contact]").forEach((link) => {
     const type = link.dataset.contact;
-    if (type === "whatsapp") link.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${body}`;
-    if (type === "email") link.href = `mailto:${EMAIL}?subject=${su}&body=${body}`;
+    if (type === "whatsapp") {
+      link.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${body}`;
+    }
+    if (type === "email") {
+      link.href = `mailto:${EMAIL}?subject=${su}&body=${body}`;
+    }
     if (type === "gmail") {
       link.href = `https://mail.google.com/mail/?view=cm&fs=1&to=${EMAIL}&su=${su}&body=${body}`;
     }
   });
 
   missionChip.hidden = !mission;
-  if (mission) missionChip.querySelector(".mission-chip-name").textContent = mission;
+  if (mission) {
+    missionChip.querySelector(".mission-chip-name").textContent = mission;
+  }
 }
 
-// "Start mission" buttons in Services pick the mission on their way down to Contact
+// Service buttons select a mission on their way to the Contact section
 document.querySelectorAll("[data-mission]").forEach((button) => {
   button.addEventListener("click", () => setMission(button.dataset.mission));
 });
@@ -475,7 +517,7 @@ missionChip
   .querySelector(".mission-chip-clear")
   .addEventListener("click", () => setMission(null));
 
-// Copy the email address (with a fallback for browsers that block the clipboard)
+// Copy to clipboard, with a fallback when the Clipboard API is unavailable
 document.querySelectorAll(".copy-btn").forEach((button) => {
   const label = button.querySelector("span");
   button.addEventListener("click", async () => {
@@ -498,31 +540,5 @@ document.querySelectorAll(".copy-btn").forEach((button) => {
   });
 });
 
-// ===== Footer: keep the copyright year current =====
+// ===== Footer =====
 document.getElementById("year").textContent = new Date().getFullYear();
-
-// ===== Scroll reveal: sections fade and slide in as they come into view =====
-const revealItems = document.querySelectorAll("[data-reveal]");
-
-if (revealItems.length && !reduceMotion) {
-  document.documentElement.classList.add("reveal-ready");
-
-  // Items side by side (cards, stages) come in one after another
-  revealItems.forEach((item) => {
-    const group = [...item.parentElement.children].filter((el) => el.hasAttribute("data-reveal"));
-    item.style.setProperty("--reveal-delay", `${group.indexOf(item) * 0.12}s`);
-  });
-
-  const revealObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible");
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    },
-    { rootMargin: "0px 0px -10% 0px" },
-  );
-  revealItems.forEach((item) => revealObserver.observe(item));
-}

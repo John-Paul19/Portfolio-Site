@@ -13,23 +13,32 @@
     <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png" />
     <link rel="canonical" href="https://iguegbe.netlify.app/" />
 
-    <!-- Link previews: the card that shows when the link is shared on WhatsApp, X and others -->
+    <!-- Open Graph / Twitter card -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://iguegbe.netlify.app/" />
     <meta property="og:site_name" content="Iguegbe Enyiolisa John-Paul" />
-    <meta property="og:title" content="Iguegbe Enyiolisa John-Paul | Full-Stack Web Developer" />
+    <meta
+      property="og:title"
+      content="Iguegbe Enyiolisa John-Paul | Full-Stack Web Developer"
+    />
     <meta
       property="og:description"
       content="I design and build websites that look great, load fast and work on every screen, from landing pages to full-stack web apps."
     />
-    <meta property="og:image" content="https://iguegbe.netlify.app/assets/img/og-image.jpg" />
+    <meta
+      property="og:image"
+      content="https://iguegbe.netlify.app/assets/img/og-image.jpg"
+    />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Iguegbe Enyiolisa John-Paul, Full-Stack Web Developer, beside an ASCII-art portrait" />
+    <meta
+      property="og:image:alt"
+      content="Iguegbe Enyiolisa John-Paul, Full-Stack Web Developer, beside an ASCII-art portrait"
+    />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:creator" content="@Chikeleze1" />
 
-    <!-- Fonts: Rajdhani (headings), Inter (body), Archivo Expanded Black Italic (logo) -->
+    <!-- Fonts: Rajdhani (headings), Inter (body), Archivo Expanded Black Italic (display), Tilt Neon (neon sign) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -45,11 +54,11 @@
       crossorigin="anonymous"
     />
 
-    <!-- Site styles (after Bootstrap so they override it) -->
+    <!-- Site styles -->
     <link rel="stylesheet" href="style.css" />
   </head>
   <body data-bs-spy="scroll" data-bs-target="#navLinks">
-    <!-- Icon sprite for the Skills, Services and Contact sections. Tech logos from Simple Icons (CC0) and Devicon (MIT, VS Code) -->
+    <!-- SVG icon sprite. Brand logos: Simple Icons (CC0); VS Code logo: Devicon (MIT) -->
     <svg class="icon-sprite" aria-hidden="true">
       <symbol id="i-html" viewBox="0 0 24 24">
         <path
@@ -406,7 +415,7 @@
             </div>
           </div>
 
-          <!-- ASCII portrait (animated by main.js) -->
+          <!-- ASCII portrait, rendered to canvas by main.js -->
           <div class="col-lg-5 order-1 order-lg-2">
             <figure class="hero-portrait">
               <canvas
@@ -508,14 +517,14 @@
         </div>
       </section>
 
-      <!-- AMG-grille divider in flag colours: green, silver, green -->
+      <!-- Grille divider -->
       <div class="grille-divider" aria-hidden="true" data-reveal>
         <span class="grille grille-green"></span>
         <span class="grille grille-silver"></span>
         <span class="grille grille-green"></span>
       </div>
 
-      <!-- Skills: a game-style loadout screen -->
+      <!-- Skills -->
       <section id="skills" class="skills">
         <div class="container">
           <div class="section-head" data-reveal>
@@ -586,7 +595,7 @@
               </article>
             </div>
 
-            <!-- Secondary: backend, with attachments under each weapon -->
+            <!-- Secondary: backend -->
             <div class="col-lg-6">
               <article class="weapon-card hud-panel loadout-panel">
                 <div class="weapon-head">
@@ -647,7 +656,7 @@
               </article>
             </div>
 
-            <!-- Equipment: the everyday tools, as inventory slots -->
+            <!-- Equipment -->
             <div class="col-lg-7">
               <div class="kit-panel loadout-panel">
                 <div class="kit-head">
@@ -699,7 +708,7 @@
               </div>
             </div>
 
-            <!-- Perks: how I work -->
+            <!-- Perks -->
             <div class="col-lg-5">
               <div class="kit-panel loadout-panel">
                 <div class="kit-head">
@@ -754,7 +763,7 @@
         </div>
       </section>
 
-      <!-- Services: mission select -->
+      <!-- Services -->
       <section id="services" class="services">
         <div class="container">
           <div class="section-head" data-reveal>
@@ -766,7 +775,7 @@
             </p>
           </div>
 
-          <!-- data-mission is for the contact form (Phase 7) to know which mission was picked -->
+          <!-- data-mission pre-fills the contact messages (main.js) -->
           <div class="row g-4">
             <div class="col-md-6 col-xl-3" data-reveal>
               <article class="mission-card">
@@ -897,7 +906,7 @@
             </div>
           </div>
 
-          <!-- How I work: four mission stages -->
+          <!-- Process -->
           <div class="process">
             <h3 class="kit-title">How I Work</h3>
             <ol class="process-steps">
@@ -941,7 +950,7 @@
             </ol>
           </div>
 
-          <!-- GitHub: where visitors can see the code -->
+          <!-- GitHub callout -->
           <div class="github-card hud-panel" data-reveal>
             <svg class="github-mark" aria-hidden="true">
               <use href="#i-github" />
@@ -968,7 +977,7 @@
         </div>
       </section>
 
-      <!-- Off the clock: neon sign and photos that fly into a grid as you scroll (main.js), just before Contact -->
+      <!-- Off the clock: scroll-driven photo grid (main.js) -->
       <section class="off-clock" aria-labelledby="off-clock-title">
         <div class="off-clock-stage">
           <div class="container">
@@ -1132,7 +1141,7 @@
         </div>
       </section>
 
-      <!-- Contact: the green band at the bottom. main.js fills in the message when a mission is picked -->
+      <!-- Contact -->
       <section id="contact" class="contact green-band">
         <div class="container">
           <div class="section-head" data-reveal>
@@ -1272,7 +1281,7 @@
       </section>
     </main>
 
-    <!-- Footer: closes the green band -->
+    <!-- Footer -->
     <footer class="site-footer">
       <div class="container">
         <div class="footer-top">

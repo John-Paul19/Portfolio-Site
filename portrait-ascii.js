@@ -1,5 +1,5 @@
-// ASCII version of assets/img/portrait.jpg, used by the hero portrait animation in main.js.
-// Dense characters (@ % #) are the darker parts of the photo. Regenerate this if the photo changes.
+// Pre-rendered ASCII portrait for the hero animation in main.js.
+// `chars` runs from lightest to densest; denser characters map to darker areas of the source photo.
 const PORTRAIT_ASCII = {
   font: 7,
   colGap: 4.9,

@@ -1,15 +1,21 @@
+/*
+ * Portfolio: Iguegbe Enyiolisa John-Paul
+ * Theme and components, layered on Bootstrap 5.3 (loaded first).
+ * Shared pieces come first, then sections in page order.
+ */
+
 /* ===== Theme ===== */
 :root {
-  /* Nigerian green */
-  --green: #008751;          /* flag green: buttons, links, highlights */
-  --green-dark: #006b3f;     /* hover states and the full-green sections */
-  --green-light: #e6f3ec;    /* soft tint for badges and backgrounds */
-  --green-bright: #00b26b;   /* flag green, brightened to read on dark backgrounds */
+  /* Brand greens */
+  --green: #008751; /* primary: buttons, links, accents */
+  --green-dark: #006b3f; /* hover states, green bands */
+  --green-light: #e6f3ec; /* light tint */
+  --green-bright: #00b26b; /* accent on dark surfaces */
 
   /* Neutrals */
-  --charcoal: #141816;       /* logo edge and dark details */
+  --charcoal: #141816; /* dark surfaces and outlines */
   --bg: #ffffff;
-  --surface: #f4f7f5;        /* cards and alternate panels */
+  --surface: #f4f7f5; /* alternate section and panel background */
   --border: #dfe7e2;
   --heading: #0d1a13;
   --text: #33413a;
@@ -22,7 +28,7 @@
 
 /* ===== Base ===== */
 html {
-  scroll-padding-top: 5rem;  /* stops the sticky navbar covering section headings */
+  scroll-padding-top: 5rem; /* offset anchor targets for the sticky navbar */
 }
 
 body {
@@ -32,7 +38,10 @@ body {
   line-height: 1.6;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   font-family: var(--font-heading);
   font-weight: 700;
   color: var(--heading);
@@ -53,6 +62,306 @@ a:hover {
   color: #fff;
 }
 
+header,
+section {
+  padding: 5rem 0;
+}
+
+.icon-sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* ===== Green band (hero and contact) ===== */
+.green-band {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  color: #fff;
+  background: radial-gradient(
+      ellipse at 80% 15%,
+      rgba(255, 255, 255, 0.14),
+      transparent 55%
+    ),
+    linear-gradient(
+      135deg,
+      var(--green) 0%,
+      var(--green-dark) 55%,
+      #004a2c 100%
+    );
+}
+
+/* Carbon-fibre texture */
+.green-band::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: rgba(0, 0, 0, 0.2);
+  background-image: linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.07) 25%,
+      transparent 25%,
+      transparent 75%,
+      rgba(255, 255, 255, 0.07) 75%
+    ),
+    linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.07) 25%,
+      transparent 25%,
+      transparent 75%,
+      rgba(255, 255, 255, 0.07) 75%
+    ),
+    linear-gradient(135deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0) 50%);
+  background-size: 8px 8px;
+  background-position:
+    0 0,
+    4px 4px,
+    0 0;
+}
+
+/* Vignette */
+.green-band::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 45%,
+    rgba(0, 0, 0, 0.3) 100%
+  );
+}
+
+/* ===== HUD panel ===== */
+/* Dark textured panel: player card, weapon cards, GitHub and contact cards */
+.hud-panel {
+  position: relative;
+  color: #fff;
+  background-color: var(--charcoal);
+  background-image: linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.03) 25%,
+      transparent 25%,
+      transparent 75%,
+      rgba(255, 255, 255, 0.03) 75%
+    ),
+    linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.03) 25%,
+      transparent 25%,
+      transparent 75%,
+      rgba(255, 255, 255, 0.03) 75%
+    );
+  background-size: 8px 8px;
+  background-position:
+    0 0,
+    4px 4px;
+  border-left: 4px solid var(--green-bright);
+}
+
+/* Corner brackets */
+.hud-panel::before,
+.hud-panel::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: var(--green-bright);
+  border-style: solid;
+}
+
+.hud-panel::before {
+  top: 8px;
+  right: 8px;
+  border-width: 2px 2px 0 0;
+}
+
+.hud-panel::after {
+  bottom: 8px;
+  right: 8px;
+  border-width: 0 2px 2px 0;
+}
+
+/* ===== Buttons ===== */
+/* Large call-to-action buttons (hero and contact) */
+.hero-actions .btn,
+.contact-actions .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  --bs-btn-padding-x: 1.75rem;
+  --bs-btn-padding-y: 0.8rem;
+  --bs-btn-border-width: 2px;
+  --bs-btn-border-radius: 2px;
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Primary call to action: solid white with a pulsing ring */
+.btn-start {
+  --bs-btn-color: var(--green-dark);
+  --bs-btn-bg: #fff;
+  --bs-btn-border-color: #fff;
+  --bs-btn-hover-color: var(--green-dark);
+  --bs-btn-hover-bg: var(--green-light);
+  --bs-btn-hover-border-color: var(--green-light);
+  --bs-btn-active-color: var(--green-dark);
+  --bs-btn-active-bg: var(--green-light);
+  --bs-btn-active-border-color: var(--green-light);
+  animation: pulse 2.2s ease-out infinite;
+}
+
+.btn-icon {
+  width: 0.75rem;
+  height: 0.875rem;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 14px rgba(255, 255, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  }
+}
+
+.btn-outline-light-custom {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: transparent;
+  --bs-btn-border-color: #fff;
+  --bs-btn-hover-color: var(--green-dark);
+  --bs-btn-hover-bg: #fff;
+  --bs-btn-hover-border-color: #fff;
+  --bs-btn-active-color: var(--green-dark);
+  --bs-btn-active-bg: #fff;
+  --bs-btn-active-border-color: #fff;
+}
+
+.hero .btn:focus-visible,
+.contact .btn:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+  box-shadow: none;
+}
+
+/* Full width on phones */
+@media (max-width: 575.98px) {
+  .hero-actions .btn,
+  .contact-actions .btn {
+    flex: 1 1 100%;
+  }
+}
+
+/* ===== Section headings ===== */
+.section-head {
+  margin-bottom: 3rem;
+}
+
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+  color: var(--green);
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* Grille motif: nine 3px bars, green / silver / green */
+.section-label::before {
+  content: "";
+  width: 2.6875rem;
+  height: 0.85rem;
+  background: linear-gradient(
+    90deg,
+    var(--green) 0 33.3%,
+    #b5c3bb 33.3% 66.6%,
+    var(--green) 66.6%
+  );
+  -webkit-mask-image: repeating-linear-gradient(
+    90deg,
+    #000 0 3px,
+    transparent 3px 5px
+  );
+  mask-image: repeating-linear-gradient(90deg, #000 0 3px, transparent 3px 5px);
+}
+
+.section-label span {
+  font-weight: 700;
+}
+
+/* Display typeface, as used for the hero name */
+.section-title {
+  margin: 0;
+  font-family: "Archivo", var(--font-heading);
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-style: italic;
+  font-stretch: 125%;
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: 0;
+}
+
+.section-lead {
+  max-width: 40rem;
+  margin: 1rem 0 0;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+
+/* ===== Scroll reveal =====
+   main.js adds .reveal-ready to <html> and .is-visible to [data-reveal] elements as they
+   enter the viewport, so content stays visible without JavaScript. The animation uses
+   `translate` rather than `transform`, leaving hover transforms unaffected. */
+.reveal-ready [data-reveal]:not(.is-visible) {
+  opacity: 0;
+}
+
+.reveal-ready [data-reveal].is-visible {
+  animation: reveal 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) var(--reveal-delay, 0s)
+    both;
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    translate: 0 2rem;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+/* Section titles: left-to-right wipe */
+.reveal-ready .section-head.is-visible .section-title {
+  animation: title-wipe 0.9s cubic-bezier(0.7, 0, 0.2, 1) 0.15s both;
+}
+
+@keyframes title-wipe {
+  from {
+    clip-path: polygon(-5% -20%, -5% -20%, -5% 120%, -5% 120%);
+    translate: -1.5rem 0;
+  }
+  to {
+    clip-path: polygon(-5% -20%, 105% -20%, 105% 120%, -5% 120%);
+    translate: 0 0;
+  }
+}
+
 /* ===== Navbar ===== */
 .site-nav {
   --bs-navbar-padding-y: 0.9rem;
@@ -63,10 +372,12 @@ a:hover {
   background-color: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid transparent;
-  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  transition:
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
 }
 
-/* Thin green bar under the navbar that fills as you scroll down the page */
+/* Page scroll progress; --scroll (0 to 1) is set by main.js */
 .scroll-progress {
   position: absolute;
   right: 0;
@@ -83,7 +394,7 @@ a:hover {
   box-shadow: 0 6px 24px rgba(13, 26, 19, 0.08);
 }
 
-/* Logo: AMG-style wordmark (wide, heavy, slanted) in green-white-green chrome */
+/* Logo: wide, heavy italic wordmark with a green-white-green chrome fill */
 .logo {
   font-family: "Archivo", var(--font-heading);
   font-size: 1.5rem;
@@ -102,15 +413,20 @@ a:hover {
 
 .logo-text {
   display: inline-block;
-  /* Top layer: chrome sheen. Bottom layer: the flag colours */
-  background-image:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.15)),
+  /* chrome highlight over a flag-colour gradient */
+  background-image: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.35),
+      rgba(255, 255, 255, 0) 50%,
+      rgba(0, 0, 0, 0.15)
+    ),
     linear-gradient(90deg, var(--green) 15%, #ffffff 50%, var(--green) 85%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  /* Thin dark edge plus a small offset shadow, so the white middle stays visible on white */
-  filter: drop-shadow(0 0 0.5px var(--charcoal)) drop-shadow(1px 1px 0 var(--charcoal));
+  /* dark outline keeps the white centre legible on light backgrounds */
+  filter: drop-shadow(0 0 0.5px var(--charcoal))
+    drop-shadow(1px 1px 0 var(--charcoal));
 }
 
 .site-nav .nav-link {
@@ -149,7 +465,7 @@ a:hover {
   letter-spacing: 0.08em;
 }
 
-/* Desktop: green underline slides in under the hovered or current link */
+/* Desktop: animated underline for hover and the active section */
 @media (min-width: 992px) {
   .site-nav .nav-link::after {
     content: "";
@@ -170,7 +486,7 @@ a:hover {
   }
 }
 
-/* Phones and tablets: spacing for the dropdown menu */
+/* Collapsed menu spacing */
 @media (max-width: 991.98px) {
   .site-nav .navbar-collapse {
     padding: 0.75rem 0 1rem;
@@ -185,46 +501,11 @@ a:hover {
   }
 }
 
-/* ===== Green bands: the hero at the top and Contact at the bottom ===== */
-.green-band {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  color: #fff;
-  background:
-    radial-gradient(ellipse at 80% 15%, rgba(255, 255, 255, 0.14), transparent 55%),
-    linear-gradient(135deg, var(--green) 0%, var(--green-dark) 55%, #004a2c 100%);
-}
-
-/* Carbon-fibre weave laid over the green */
-.green-band::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background-color: rgba(0, 0, 0, 0.2);
-  background-image:
-    linear-gradient(45deg, rgba(255, 255, 255, 0.07) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.07) 75%),
-    linear-gradient(45deg, rgba(255, 255, 255, 0.07) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.07) 75%),
-    linear-gradient(135deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0) 50%);
-  background-size: 8px 8px;
-  background-position: 0 0, 4px 4px, 0 0;
-}
-
-/* Darker edges so the middle stands out */
-.green-band::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: radial-gradient(ellipse at center, transparent 45%, rgba(0, 0, 0, 0.3) 100%);
-}
-
 /* ===== Hero ===== */
 .hero {
   display: flex;
   align-items: center;
-  min-height: calc(100vh - 4.25rem);   /* full screen minus the navbar */
+  min-height: calc(100vh - 4.25rem); /* viewport minus the navbar */
   min-height: calc(100svh - 4.25rem);
   padding: 6rem 0;
 }
@@ -248,7 +529,7 @@ a:hover {
   background-color: #fff;
 }
 
-/* Name in the logo's AMG style: wide, heavy, slanted */
+/* Name set in the logo typeface */
 .hero-name {
   margin-bottom: 1rem;
   color: #fff;
@@ -268,25 +549,34 @@ a:hover {
   font-size: clamp(1.1rem, 2.6vw, 1.9rem);
 }
 
-/* "John-Paul" in green-white-green chrome, like the logo */
+/* Chrome fill, lightened for the green background */
 .hero-name-main {
   width: fit-content;
   font-size: clamp(2.4rem, 6.2vw, 4.75rem);
   letter-spacing: -0.01em;
-  background-image:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.15)),
-    linear-gradient(90deg, #7be0b0 10%, #ffffff 50%, #7be0b0 90%);   /* lighter green so it shows on the green hero */
+  background-image: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.35),
+      rgba(255, 255, 255, 0) 50%,
+      rgba(0, 0, 0, 0.15)
+    ),
+    linear-gradient(90deg, #7be0b0 10%, #ffffff 50%, #7be0b0 90%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  filter: drop-shadow(0 0 0.5px var(--charcoal)) drop-shadow(2px 2px 0 var(--charcoal));
+  filter: drop-shadow(0 0 0.5px var(--charcoal))
+    drop-shadow(2px 2px 0 var(--charcoal));
 }
 
 .hero-typed {
-  min-height: 1.5em;   /* keeps the layout still while lines type and delete */
+  min-height: 1.5em; /* reserve height to avoid layout shift */
   margin-bottom: 1.25rem;
   font-family: var(--font-heading);
-  font-size: clamp(1rem, 4.6vw, 1.75rem);   /* small enough that the loadout line fits on one line on small phones */
+  font-size: clamp(
+    1rem,
+    4.6vw,
+    1.75rem
+  ); /* longest line fits on one row on small phones */
   font-weight: 600;
   letter-spacing: 0.04em;
 }
@@ -302,7 +592,9 @@ a:hover {
 }
 
 @keyframes blink {
-  50% { opacity: 0; }
+  50% {
+    opacity: 0;
+  }
 }
 
 .hero-intro {
@@ -317,69 +609,7 @@ a:hover {
   gap: 1rem;
 }
 
-/* Big uppercase buttons, shared by the hero and Contact */
-.hero-actions .btn,
-.contact-actions .btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
-  --bs-btn-padding-x: 1.75rem;
-  --bs-btn-padding-y: 0.8rem;
-  --bs-btn-border-width: 2px;
-  --bs-btn-border-radius: 2px;
-  font-family: var(--font-heading);
-  font-size: 1.05rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-/* "Press Start" button: white with a pulsing glow */
-.btn-start {
-  --bs-btn-color: var(--green-dark);
-  --bs-btn-bg: #fff;
-  --bs-btn-border-color: #fff;
-  --bs-btn-hover-color: var(--green-dark);
-  --bs-btn-hover-bg: var(--green-light);
-  --bs-btn-hover-border-color: var(--green-light);
-  --bs-btn-active-color: var(--green-dark);
-  --bs-btn-active-bg: var(--green-light);
-  --bs-btn-active-border-color: var(--green-light);
-  animation: pulse 2.2s ease-out infinite;
-}
-
-.btn-icon {
-  width: 0.75rem;
-  height: 0.875rem;
-}
-
-@keyframes pulse {
-  0%   { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.55); }
-  70%  { box-shadow: 0 0 0 14px rgba(255, 255, 255, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
-}
-
-.btn-outline-light-custom {
-  --bs-btn-color: #fff;
-  --bs-btn-bg: transparent;
-  --bs-btn-border-color: #fff;
-  --bs-btn-hover-color: var(--green-dark);
-  --bs-btn-hover-bg: #fff;
-  --bs-btn-hover-border-color: #fff;
-  --bs-btn-active-color: var(--green-dark);
-  --bs-btn-active-bg: #fff;
-  --bs-btn-active-border-color: #fff;
-}
-
-.hero .btn:focus-visible,
-.contact .btn:focus-visible {
-  outline: 3px solid #fff;
-  outline-offset: 3px;
-  box-shadow: none;
-}
-
-/* ASCII portrait */
+/* ASCII portrait (canvas, drawn by main.js) */
 .hero-portrait {
   margin: 0;
   text-align: center;
@@ -392,7 +622,7 @@ a:hover {
   aspect-ratio: 1;
   margin: 0 auto;
   cursor: crosshair;
-  touch-action: pan-y;   /* phones can still scroll the page over it */
+  touch-action: pan-y; /* keep vertical page scrolling on touch */
 }
 
 .portrait-hint {
@@ -405,13 +635,17 @@ a:hover {
   opacity: 0.7;
 }
 
-/* Show the right hint for mouse or touch screens */
+/* Pointer-specific hint text */
 @media (hover: none) {
-  .hint-hover { display: none; }
+  .hint-hover {
+    display: none;
+  }
 }
 
 @media (hover: hover) {
-  .hint-touch { display: none; }
+  .hint-touch {
+    display: none;
+  }
 }
 
 @media (max-width: 991.98px) {
@@ -424,7 +658,7 @@ a:hover {
   }
 }
 
-/* Scroll-down arrow */
+/* Scroll cue */
 .scroll-cue {
   position: absolute;
   bottom: 1.5rem;
@@ -443,219 +677,49 @@ a:hover {
 }
 
 @keyframes bob {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(8px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
+  }
 }
 
-/* Content rises in one piece after another when the page loads */
+/* Staggered entrance on load */
 .hero-content > * {
   animation: rise 0.7s ease-out both;
 }
 
-.hero-content > :nth-child(2) { animation-delay: 0.1s; }
-.hero-content > :nth-child(3) { animation-delay: 0.2s; }
-.hero-content > :nth-child(4) { animation-delay: 0.3s; }
-.hero-content > :nth-child(5) { animation-delay: 0.4s; }
-
-@keyframes rise {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
+.hero-content > :nth-child(2) {
+  animation-delay: 0.1s;
+}
+.hero-content > :nth-child(3) {
+  animation-delay: 0.2s;
+}
+.hero-content > :nth-child(4) {
+  animation-delay: 0.3s;
+}
+.hero-content > :nth-child(5) {
+  animation-delay: 0.4s;
 }
 
-/* Phones: full-width buttons */
-@media (max-width: 575.98px) {
-  .hero-actions .btn,
-  .contact-actions .btn {
-    flex: 1 1 100%;
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-/* Very small phones: tighter letters so the loadout line stays on one line */
+/* Very narrow screens */
 @media (max-width: 359.98px) {
   .hero-typed {
     letter-spacing: 0;
   }
-}
-
-/* Respect people who turn animations off on their device */
-@media (prefers-reduced-motion: reduce) {
-  .hero-content > *,
-  .btn-start,
-  .scroll-cue,
-  .typed-cursor {
-    animation: none;
-  }
-}
-
-/* ===== Section headings (shared by About, Skills, Services, Contact) ===== */
-.section-head {
-  margin-bottom: 3rem;
-}
-
-.section-label {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 0.5rem;
-  color: var(--green);
-  font-family: var(--font-heading);
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-}
-
-/* Mini AMG grille in flag colours (green, silver, green): nine bars of 3px */
-.section-label::before {
-  content: "";
-  width: 2.6875rem;
-  height: 0.85rem;
-  background: linear-gradient(90deg, var(--green) 0 33.3%, #b5c3bb 33.3% 66.6%, var(--green) 66.6%);
-  -webkit-mask-image: repeating-linear-gradient(90deg, #000 0 3px, transparent 3px 5px);
-  mask-image: repeating-linear-gradient(90deg, #000 0 3px, transparent 3px 5px);
-}
-
-.section-label span {
-  font-weight: 700;
-}
-
-/* Same AMG style as the hero name */
-.section-title {
-  margin: 0;
-  font-family: "Archivo", var(--font-heading);
-  font-size: clamp(2rem, 5vw, 3.25rem);
-  font-style: italic;
-  font-stretch: 125%;
-  font-weight: 900;
-  line-height: 1.05;
-  letter-spacing: 0;
-}
-
-.section-lead {
-  max-width: 40rem;
-  margin: 1rem 0 0;
-  color: var(--text-muted);
-  font-size: 1.1rem;
-}
-
-/* ===== Scroll reveal =====
-   main.js adds .reveal-ready to <html>, then .is-visible to each [data-reveal] element as it
-   scrolls into view, so nothing is hidden without JavaScript. The slide uses translate (not
-   transform), so hover lifts on cards still work */
-.reveal-ready [data-reveal]:not(.is-visible) {
-  opacity: 0;
-}
-
-.reveal-ready [data-reveal].is-visible {
-  animation: reveal 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) var(--reveal-delay, 0s) both;
-}
-
-@keyframes reveal {
-  from { opacity: 0; translate: 0 2rem; }
-  to   { opacity: 1; translate: 0 0; }
-}
-
-/* Section titles wipe in from the left, like a car flashing past */
-.reveal-ready .section-head.is-visible .section-title {
-  animation: title-wipe 0.9s cubic-bezier(0.7, 0, 0.2, 1) 0.15s both;
-}
-
-@keyframes title-wipe {
-  from { clip-path: polygon(-5% -20%, -5% -20%, -5% 120%, -5% 120%); translate: -1.5rem 0; }
-  to   { clip-path: polygon(-5% -20%, 105% -20%, 105% 120%, -5% 120%); translate: 0 0; }
-}
-
-/* How I work: each stage's dashed track draws on to the next stage */
-.reveal-ready .process-step.is-visible::after {
-  animation: track-down 0.6s ease-out calc(var(--reveal-delay, 0s) + 0.35s) both;
-}
-
-@keyframes track-down {
-  from { scale: 1 0; }
-  to   { scale: 1 1; }
-}
-
-@keyframes track-across {
-  from { scale: 0 1; }
-  to   { scale: 1 1; }
-}
-
-@media (min-width: 992px) {
-  .reveal-ready .process-step.is-visible::after {
-    animation-name: track-across;
-  }
-}
-
-/* ===== AMG grille divider (between About and Skills) ===== */
-.grille-divider {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  gap: 0.4rem;
-  max-width: 1140px;
-  height: 1.75rem;
-  margin: -1.5rem auto;   /* sits in the white space between the two sections */
-  padding: 0 0.75rem;
-}
-
-/* Thin rule running out to each side, with a gap for the grille */
-.grille-divider::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  right: 0.75rem;
-  left: 0.75rem;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--border) 15%,
-    var(--border) calc(50% - 6.5rem),
-    transparent calc(50% - 6.5rem),
-    transparent calc(50% + 6.5rem),
-    var(--border) calc(50% + 6.5rem),
-    var(--border) 85%,
-    transparent
-  );
-}
-
-/* Each group is eight vertical bars, like a Panamericana grille */
-.grille {
-  width: 3.5rem;
-  height: 100%;
-  transform-origin: bottom;
-  -webkit-mask-image: repeating-linear-gradient(90deg, #000 0 4px, transparent 4px 7px);
-  mask-image: repeating-linear-gradient(90deg, #000 0 4px, transparent 4px 7px);
-}
-
-.grille-green {
-  background: linear-gradient(180deg, var(--green-bright), var(--green-dark));
-}
-
-.grille-silver {
-  background: linear-gradient(180deg, #f2f5f3, #9fb0a7);
-}
-
-/* On reveal the bars rise one group after another, and the rule runs out from the middle */
-.reveal-ready .grille-divider.is-visible .grille {
-  animation: grille-rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
-}
-
-.reveal-ready .grille-divider.is-visible .grille:nth-child(2) { animation-delay: 0.1s; }
-.reveal-ready .grille-divider.is-visible .grille:nth-child(3) { animation-delay: 0.2s; }
-
-.reveal-ready .grille-divider.is-visible::before {
-  animation: rule-out 1s ease-out 0.2s both;
-}
-
-@keyframes grille-rise {
-  from { scale: 1 0; }
-  to   { scale: 1 1; }
-}
-
-@keyframes rule-out {
-  from { scale: 0 1; }
-  to   { scale: 1 1; }
 }
 
 /* ===== About ===== */
@@ -669,42 +733,6 @@ a:hover {
   font-size: 1.3rem;
   font-weight: 500;
   line-height: 1.5;
-}
-
-/* Dark HUD panel: the player card, the Skills weapon cards and the GitHub card */
-.hud-panel {
-  position: relative;
-  color: #fff;
-  background-color: var(--charcoal);
-  background-image:
-    linear-gradient(45deg, rgba(255, 255, 255, 0.03) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.03) 75%),
-    linear-gradient(45deg, rgba(255, 255, 255, 0.03) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.03) 75%);
-  background-size: 8px 8px;
-  background-position: 0 0, 4px 4px;
-  border-left: 4px solid var(--green-bright);
-}
-
-/* HUD corner brackets */
-.hud-panel::before,
-.hud-panel::after {
-  content: "";
-  position: absolute;
-  width: 18px;
-  height: 18px;
-  border-color: var(--green-bright);
-  border-style: solid;
-}
-
-.hud-panel::before {
-  top: 8px;
-  right: 8px;
-  border-width: 2px 2px 0 0;
-}
-
-.hud-panel::after {
-  bottom: 8px;
-  right: 8px;
-  border-width: 0 2px 2px 0;
 }
 
 .player-card {
@@ -770,7 +798,12 @@ a:hover {
 .mini-flag {
   width: 1.35rem;
   height: 0.9rem;
-  background: linear-gradient(90deg, var(--green) 33.33%, #fff 33.33% 66.66%, var(--green) 66.66%);
+  background: linear-gradient(
+    90deg,
+    var(--green) 33.33%,
+    #fff 33.33% 66.66%,
+    var(--green) 66.66%
+  );
   outline: 1px solid rgba(255, 255, 255, 0.35);
 }
 
@@ -783,12 +816,969 @@ a:hover {
 }
 
 @keyframes status-pulse {
-  0%   { box-shadow: 0 0 0 0 rgba(0, 178, 107, 0.7); }
-  70%  { box-shadow: 0 0 0 8px rgba(0, 178, 107, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(0, 178, 107, 0); }
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 178, 107, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(0, 178, 107, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 178, 107, 0);
+  }
 }
 
-/* ===== Off the clock: neon sign and photos (a dark band just before Contact) ===== */
+/* ===== Grille divider ===== */
+.grille-divider {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  max-width: 1140px;
+  height: 1.75rem;
+  margin: -1.5rem auto; /* overlaps the neighbouring section padding */
+  padding: 0 0.75rem;
+}
+
+/* Horizontal rule, interrupted behind the grille */
+.grille-divider::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  left: 0.75rem;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--border) 15%,
+    var(--border) calc(50% - 6.5rem),
+    transparent calc(50% - 6.5rem),
+    transparent calc(50% + 6.5rem),
+    var(--border) calc(50% + 6.5rem),
+    var(--border) 85%,
+    transparent
+  );
+}
+
+/* Vertical-bar grille groups */
+.grille {
+  width: 3.5rem;
+  height: 100%;
+  transform-origin: bottom;
+  -webkit-mask-image: repeating-linear-gradient(
+    90deg,
+    #000 0 4px,
+    transparent 4px 7px
+  );
+  mask-image: repeating-linear-gradient(90deg, #000 0 4px, transparent 4px 7px);
+}
+
+.grille-green {
+  background: linear-gradient(180deg, var(--green-bright), var(--green-dark));
+}
+
+.grille-silver {
+  background: linear-gradient(180deg, #f2f5f3, #9fb0a7);
+}
+
+/* Reveal: bars rise in sequence and the rule extends from the centre */
+.reveal-ready .grille-divider.is-visible .grille {
+  animation: grille-rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.reveal-ready .grille-divider.is-visible .grille:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.reveal-ready .grille-divider.is-visible .grille:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.reveal-ready .grille-divider.is-visible::before {
+  animation: rule-out 1s ease-out 0.2s both;
+}
+
+@keyframes grille-rise {
+  from {
+    scale: 1 0;
+  }
+  to {
+    scale: 1 1;
+  }
+}
+
+@keyframes rule-out {
+  from {
+    scale: 0 1;
+  }
+  to {
+    scale: 1 1;
+  }
+}
+
+/* ===== Skills ===== */
+.skills {
+  position: relative;
+  isolation: isolate;
+}
+
+/* Background grid, faded towards the edges */
+.skills::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: linear-gradient(rgba(0, 135, 81, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 135, 81, 0.07) 1px, transparent 1px);
+  background-size: 36px 36px;
+  -webkit-mask-image: radial-gradient(
+    ellipse at 50% 35%,
+    #000 20%,
+    transparent 70%
+  );
+  mask-image: radial-gradient(ellipse at 50% 35%, #000 20%, transparent 70%);
+}
+
+/* Weapon cards (frontend and backend) */
+.weapon-card {
+  height: 100%;
+  padding: 1.75rem;
+  box-shadow: 0 18px 40px rgba(13, 26, 19, 0.16);
+}
+
+.weapon-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  padding-right: 1.5rem; /* clears the corner bracket */
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.weapon-slot {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--green-bright);
+}
+
+.weapon-slot-num {
+  padding: 0.1rem 0.5rem;
+  border: 1px solid var(--green-bright);
+  letter-spacing: 0;
+}
+
+.equipped-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.6rem;
+  color: var(--charcoal);
+  background-color: var(--green-bright);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+}
+
+.equipped-tag svg {
+  width: 0.8rem;
+  height: 0.8rem;
+}
+
+.weapon-name {
+  margin-bottom: 0.25rem;
+  color: #fff;
+  font-family: "Archivo", var(--font-heading);
+  font-size: clamp(1.6rem, 3.6vw, 2.25rem);
+  font-style: italic;
+  font-stretch: 125%;
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: 0;
+}
+
+.weapon-desc {
+  margin-bottom: 1.25rem;
+  color: #9db3a7;
+}
+
+.weapon-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.weapon-item {
+  --brand: var(--green-bright);
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 0.9rem 0.75rem;
+  border-top: 1px dashed rgba(255, 255, 255, 0.12);
+  transition: background-color 0.25s ease;
+}
+
+/* Selection bar on hover */
+.weapon-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 3px;
+  background-color: var(--green-bright);
+  transform: scaleY(0);
+  transition: transform 0.25s ease;
+}
+
+.weapon-item:hover {
+  background-color: rgba(0, 178, 107, 0.08);
+}
+
+.weapon-item:hover::before {
+  transform: scaleY(1);
+}
+
+.weapon-icon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  transition:
+    color 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.weapon-icon svg {
+  width: 1.6rem;
+  height: 1.6rem;
+  fill: currentColor;
+}
+
+/* Brand colour on hover (--brand is set inline) */
+.weapon-item:hover .weapon-icon {
+  color: var(--brand);
+  border-color: var(--brand);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--brand) 45%, transparent);
+}
+
+.weapon-item-name {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.weapon-item p {
+  margin: 0;
+  color: #9db3a7;
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+/* Attachment chips */
+.attachments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.6rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.attachments li {
+  padding: 0.1rem 0.55rem;
+  color: #d7efe2;
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background-color: rgba(0, 178, 107, 0.1);
+  border: 1px solid rgba(0, 178, 107, 0.45);
+}
+
+.attachments li::before {
+  content: "+";
+  margin-right: 0.3rem;
+  color: var(--green-bright);
+}
+
+/* Equipment and perks panels */
+.kit-panel {
+  position: relative;
+  height: 100%;
+  padding: 1.75rem;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.kit-panel::before,
+.kit-panel::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: var(--green);
+  border-style: solid;
+}
+
+.kit-panel::before {
+  top: -1px;
+  left: -1px;
+  border-width: 3px 0 0 3px;
+}
+
+.kit-panel::after {
+  right: -1px;
+  bottom: -1px;
+  border-width: 0 3px 3px 0;
+}
+
+.kit-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.kit-title {
+  margin: 0;
+  font-family: "Archivo", var(--font-heading);
+  font-size: clamp(1.4rem, 3vw, 1.75rem);
+  font-style: italic;
+  font-stretch: 125%;
+  font-weight: 900;
+  letter-spacing: 0;
+}
+
+.kit-count {
+  color: var(--green);
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Equipment tiles */
+.tool-grid {
+  --cols: 3;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* centres the final partial row */
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 576px) {
+  .tool-grid {
+    --cols: 4;
+  }
+}
+
+.tool {
+  --brand: var(--green);
+  flex: 0 0 calc((100% - (var(--cols) - 1) * 0.75rem) / var(--cols));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  min-height: 6.5rem;
+  padding: 0.9rem 0.4rem;
+  color: var(--heading);
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: 0.05em;
+  text-align: center;
+  text-transform: uppercase;
+  background-color: #fff;
+  border: 1px solid var(--border);
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.tool svg {
+  width: 1.9rem;
+  height: 1.9rem;
+  fill: currentColor;
+  transition: color 0.25s ease;
+}
+
+.tool:hover {
+  border-color: var(--green);
+  box-shadow: 0 10px 22px rgba(13, 26, 19, 0.1);
+  transform: translateY(-4px);
+}
+
+.tool:hover svg {
+  color: var(--brand);
+}
+
+/* Perks */
+.perk-list {
+  display: grid;
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.perk {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+/* Hexagonal badge */
+.perk-badge {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 3.2rem;
+  height: 3.6rem;
+  color: #fff;
+  background: linear-gradient(160deg, var(--green-bright), var(--green-dark));
+  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  transition: transform 0.25s ease;
+}
+
+.perk-badge svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.perk:hover .perk-badge {
+  transform: scale(1.08);
+}
+
+.perk-num {
+  display: block;
+  color: var(--green);
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.perk-name {
+  display: block;
+  color: var(--heading);
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.perk p {
+  margin: 0.2rem 0 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Equip sequence: main.js adds .will-equip, then .equipped when a panel enters the
+   viewport; --i (the item index) staggers the delay. */
+.will-equip .equip-item,
+.will-equip .equipped-tag {
+  opacity: 0;
+}
+
+.equipped .equip-item {
+  animation: equip 0.5s ease-out both;
+  animation-delay: calc(0.15s + var(--i, 0) * 0.08s);
+}
+
+/* Highlight flash per weapon */
+.equipped .weapon-item::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 178, 107, 0.3);
+  pointer-events: none;
+  animation: equip-flash 0.7s ease-out both;
+  animation-delay: inherit;
+}
+
+.equipped .equipped-tag {
+  animation: stamp 0.4s cubic-bezier(0.3, 1.6, 0.6, 1) 0.75s both;
+}
+
+/* translate (not transform) keeps the tile hover transform working */
+@keyframes equip {
+  from {
+    opacity: 0;
+    translate: -20px 0;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@keyframes equip-flash {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes stamp {
+  from {
+    opacity: 0;
+    transform: scale(1.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 575.98px) {
+  .weapon-card,
+  .kit-panel {
+    padding: 1.25rem;
+  }
+
+  .weapon-item {
+    gap: 0.85rem;
+    padding-inline: 0.5rem;
+  }
+
+  .tool {
+    font-size: 0.8rem;
+  }
+}
+
+/* ===== Services ===== */
+.services {
+  background-color: var(--surface);
+}
+
+/* Mission cards */
+.mission-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1.75rem 1.5rem 1.5rem;
+  background-color: #fff;
+  border: 1px solid var(--border);
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* Top accent bar, expands on hover and focus */
+.mission-card::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: calc(100% + 2px);
+  height: 4px;
+  background-color: var(--green);
+  transform: scaleX(0.2);
+  transform-origin: left;
+  transition: transform 0.35s ease;
+}
+
+.mission-card:hover,
+.mission-card:focus-within {
+  border-color: var(--green);
+  box-shadow: 0 18px 40px rgba(13, 26, 19, 0.12);
+  transform: translateY(-6px);
+}
+
+.mission-card:hover::before,
+.mission-card:focus-within::before {
+  transform: scaleX(1);
+}
+
+.mission-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.mission-num {
+  color: var(--green);
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.mission-icon {
+  width: 2.25rem;
+  height: 2.25rem;
+  color: var(--green);
+}
+
+.mission-name {
+  margin-bottom: 0.6rem;
+  font-family: "Archivo", var(--font-heading);
+  font-size: 1.35rem;
+  font-style: italic;
+  font-stretch: 125%;
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: 0;
+}
+
+.mission-brief {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.mission-label {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.4rem;
+  color: var(--heading);
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* Trailing rule */
+.mission-label::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background-color: var(--border);
+}
+
+.mission-list {
+  margin: 0 0 1.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.mission-list li {
+  position: relative;
+  padding: 0.3rem 0 0.3rem 1.25rem;
+  font-size: 0.95rem;
+}
+
+/* Diamond bullets */
+.mission-list li::before {
+  content: "";
+  position: absolute;
+  top: 0.84rem;
+  left: 0.15rem;
+  width: 0.45rem;
+  height: 0.45rem;
+  background-color: var(--green);
+  transform: rotate(45deg);
+}
+
+.mission-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: auto; /* pins the button to the card bottom */
+  padding: 0.7rem 1rem;
+  color: var(--green);
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  text-transform: uppercase;
+  border: 2px solid var(--green);
+  border-radius: 2px;
+  transition:
+    color 0.25s ease,
+    background-color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.mission-btn svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  transition: transform 0.25s ease;
+}
+
+.mission-card:hover .mission-btn,
+.mission-btn:focus-visible {
+  color: #fff;
+  background-color: var(--green);
+}
+
+.mission-btn:hover {
+  color: #fff;
+  background-color: var(--green-dark);
+  border-color: var(--green-dark);
+}
+
+.mission-card:hover .mission-btn svg {
+  transform: translateX(4px);
+}
+
+.mission-btn:focus-visible {
+  outline: 3px solid rgba(0, 135, 81, 0.35);
+  outline-offset: 2px;
+}
+
+/* Process steps */
+.process {
+  margin-top: 4.5rem;
+}
+
+.process .kit-title {
+  margin-bottom: 2rem;
+}
+
+.process-steps {
+  display: grid;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.process-step {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+/* Step marker */
+.step-node {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  color: #fff;
+  background-color: var(--green);
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  transition: background-color 0.25s ease;
+}
+
+.process-step:hover .step-node {
+  background-color: var(--charcoal);
+}
+
+.step-name {
+  display: block;
+  color: var(--heading);
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.process-step p {
+  margin: 0.2rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+/* Dashed connector: vertical below 992px, horizontal above */
+.process-step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 3.75rem;
+  bottom: -1rem;
+  left: calc(1.625rem - 1px);
+  width: 2px;
+  background-image: repeating-linear-gradient(
+    180deg,
+    var(--green) 0 6px,
+    transparent 6px 11px
+  );
+  transform-origin: top;
+}
+
+@media (min-width: 992px) {
+  .process-steps {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .process-step {
+    flex-direction: column;
+  }
+
+  .process-step:not(:last-child)::after {
+    top: calc(1.625rem - 1px);
+    right: -1rem;
+    bottom: auto;
+    left: 3.75rem;
+    width: auto;
+    height: 2px;
+    background-image: repeating-linear-gradient(
+      90deg,
+      var(--green) 0 6px,
+      transparent 6px 11px
+    );
+    transform-origin: left;
+  }
+}
+
+/* Connector draws in after its step is revealed */
+.reveal-ready .process-step.is-visible::after {
+  animation: track-down 0.6s ease-out calc(var(--reveal-delay, 0s) + 0.35s) both;
+}
+
+@keyframes track-down {
+  from {
+    scale: 1 0;
+  }
+  to {
+    scale: 1 1;
+  }
+}
+
+@keyframes track-across {
+  from {
+    scale: 0 1;
+  }
+  to {
+    scale: 1 1;
+  }
+}
+
+@media (min-width: 992px) {
+  .reveal-ready .process-step.is-visible::after {
+    animation-name: track-across;
+  }
+}
+
+/* GitHub callout */
+.github-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.5rem 2rem;
+  margin-top: 4.5rem;
+  padding: 2rem 3rem 2rem 2rem; /* right padding clears the corner brackets */
+  box-shadow: 0 18px 40px rgba(13, 26, 19, 0.16);
+}
+
+.github-mark {
+  flex: none;
+  width: 4rem;
+  height: 4rem;
+  fill: currentColor;
+}
+
+.github-text {
+  flex: 1 1 20rem;
+}
+
+.github-label {
+  margin-bottom: 0.25rem;
+  color: var(--green-bright);
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.github-title {
+  margin-bottom: 0.4rem;
+  color: #fff;
+  font-family: "Archivo", var(--font-heading);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-style: italic;
+  font-stretch: 125%;
+  font-weight: 900;
+  letter-spacing: 0;
+}
+
+.github-text p:last-child {
+  margin: 0;
+  color: #9db3a7;
+}
+
+.btn-github {
+  --bs-btn-padding-x: 1.75rem;
+  --bs-btn-padding-y: 0.8rem;
+  --bs-btn-color: var(--charcoal);
+  --bs-btn-bg: #fff;
+  --bs-btn-border-color: #fff;
+  --bs-btn-hover-color: var(--charcoal);
+  --bs-btn-hover-bg: var(--green-bright);
+  --bs-btn-hover-border-color: var(--green-bright);
+  --bs-btn-active-color: var(--charcoal);
+  --bs-btn-active-bg: var(--green-bright);
+  --bs-btn-active-border-color: var(--green-bright);
+  --bs-btn-border-width: 2px;
+  --bs-btn-border-radius: 2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.btn-github svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.btn-github:focus-visible {
+  outline: 3px solid var(--green-bright);
+  outline-offset: 3px;
+  box-shadow: none;
+}
+
+@media (max-width: 575.98px) {
+  .github-card {
+    padding: 1.75rem 1.5rem;
+  }
+
+  .btn-github {
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+/* ===== Off the clock ===== */
 .off-clock {
   position: relative;
   padding: 4.5rem 0 4rem;
@@ -796,15 +1786,36 @@ a:hover {
   color: #fff;
   text-align: center;
   background-color: #0b0e0c;
-  background-image:
-    radial-gradient(ellipse at 50% 0%, rgba(0, 178, 107, 0.28), transparent 60%),
-    linear-gradient(45deg, rgba(255, 255, 255, 0.025) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.025) 75%),
-    linear-gradient(45deg, rgba(255, 255, 255, 0.025) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.025) 75%);
-  background-size: auto, 8px 8px, 8px 8px;
-  background-position: 0 0, 0 0, 4px 4px;
+  background-image: radial-gradient(
+      ellipse at 50% 0%,
+      rgba(0, 178, 107, 0.28),
+      transparent 60%
+    ),
+    linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.025) 25%,
+      transparent 25%,
+      transparent 75%,
+      rgba(255, 255, 255, 0.025) 75%
+    ),
+    linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.025) 25%,
+      transparent 25%,
+      transparent 75%,
+      rgba(255, 255, 255, 0.025) 75%
+    );
+  background-size:
+    auto,
+    8px 8px,
+    8px 8px;
+  background-position:
+    0 0,
+    0 0,
+    4px 4px;
 }
 
-/* Neon sign: glowing tubes inside a glowing frame */
+/* Neon sign */
 .neon-sign {
   display: inline-flex;
   flex-wrap: wrap;
@@ -846,12 +1857,20 @@ a:hover {
   animation: neon-flicker 7s linear infinite;
 }
 
-/* Every few seconds the green tube stutters, like a real sign */
+/* Intermittent flicker on the green word */
 @keyframes neon-flicker {
-  0%, 18%, 20.5%, 22%, 62%, 64%, 100% {
+  0%,
+  18%,
+  20.5%,
+  22%,
+  62%,
+  64%,
+  100% {
     opacity: 1;
   }
-  19%, 21.5%, 63% {
+  19%,
+  21.5%,
+  63% {
     opacity: 0.35;
   }
 }
@@ -862,7 +1881,7 @@ a:hover {
   font-size: 1.05rem;
 }
 
-/* Photo grid. Without JavaScript (or with animations turned off) it is a plain grid */
+/* Photo grid (static layout; see scatter mode below) */
 .clock-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -954,12 +1973,12 @@ a:hover {
   }
 }
 
-/* Scatter mode (switched on by main.js): the section is a few screens tall and the stage
-   sticks in place while you scroll, so the thrown photos fly into the grid */
+/* Scatter mode (.is-scatter, added by main.js): the section becomes a tall scroll track
+   with a sticky stage; main.js positions each card from the scroll progress. */
 .off-clock.is-scatter {
   height: 280vh;
   padding: 0;
-  overflow: visible;   /* sticky stops working inside a box that hides its overflow */
+  overflow: visible; /* required for position: sticky */
 }
 
 .off-clock.is-scatter .off-clock-stage {
@@ -969,7 +1988,7 @@ a:hover {
   flex-direction: column;
   height: 100vh;
   height: 100svh;
-  padding: 5.5rem 0 1.5rem;   /* the top clears the navbar */
+  padding: 5.5rem 0 1.5rem; /* top padding clears the navbar */
   overflow: hidden;
   background: inherit;
 }
@@ -986,7 +2005,7 @@ a:hover {
   perspective: 1200px;
 }
 
-/* main.js sets each card's size and moves it with a transform */
+/* size (--cw, --ch) and transform are set by main.js */
 .off-clock.is-scatter .clock-card {
   position: absolute;
   top: 50%;
@@ -1002,847 +2021,26 @@ a:hover {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .status-dot,
-  .neon-green {
-    animation: none;
-  }
-
-  .clock-card:hover img {
-    transform: none;
-  }
-}
-
-/* ===== Skills: the loadout ===== */
-.icon-sprite {
-  position: absolute;
-  width: 0;
-  height: 0;
-  overflow: hidden;
-}
-
-.skills {
-  position: relative;
-  isolation: isolate;
-}
-
-/* Faint HUD grid behind the section, fading out towards the edges */
-.skills::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background-image:
-    linear-gradient(rgba(0, 135, 81, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 135, 81, 0.07) 1px, transparent 1px);
-  background-size: 36px 36px;
-  -webkit-mask-image: radial-gradient(ellipse at 50% 35%, #000 20%, transparent 70%);
-  mask-image: radial-gradient(ellipse at 50% 35%, #000 20%, transparent 70%);
-}
-
-/* Weapon cards (Primary and Secondary) */
-.weapon-card {
-  height: 100%;
-  padding: 1.75rem;
-  box-shadow: 0 18px 40px rgba(13, 26, 19, 0.16);
-}
-
-.weapon-head {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0.5rem 1rem;
-  margin-bottom: 1rem;
-  padding-right: 1.5rem;   /* clear of the corner bracket */
-  font-family: var(--font-heading);
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-}
-
-.weapon-slot {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  color: var(--green-bright);
-}
-
-.weapon-slot-num {
-  padding: 0.1rem 0.5rem;
-  border: 1px solid var(--green-bright);
-  letter-spacing: 0;
-}
-
-.equipped-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.2rem 0.6rem;
-  color: var(--charcoal);
-  background-color: var(--green-bright);
-  font-size: 0.75rem;
-  letter-spacing: 0.15em;
-}
-
-.equipped-tag svg {
-  width: 0.8rem;
-  height: 0.8rem;
-}
-
-.weapon-name {
-  margin-bottom: 0.25rem;
-  color: #fff;
-  font-family: "Archivo", var(--font-heading);
-  font-size: clamp(1.6rem, 3.6vw, 2.25rem);
-  font-style: italic;
-  font-stretch: 125%;
-  font-weight: 900;
-  line-height: 1.1;
-  letter-spacing: 0;
-}
-
-.weapon-desc {
-  margin-bottom: 1.25rem;
-  color: #9db3a7;
-}
-
-.weapon-list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.weapon-item {
-  --brand: var(--green-bright);
-  position: relative;
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-  padding: 0.9rem 0.75rem;
-  border-top: 1px dashed rgba(255, 255, 255, 0.12);
-  transition: background-color 0.25s ease;
-}
-
-/* A green bar slides in on the hovered weapon, like a game menu */
-.weapon-item::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 3px;
-  background-color: var(--green-bright);
-  transform: scaleY(0);
-  transition: transform 0.25s ease;
-}
-
-.weapon-item:hover {
-  background-color: rgba(0, 178, 107, 0.08);
-}
-
-.weapon-item:hover::before {
-  transform: scaleY(1);
-}
-
-.weapon-icon {
-  display: grid;
-  flex: none;
-  place-items: center;
-  width: 3rem;
-  height: 3rem;
-  color: #fff;
-  background-color: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  transition: color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-}
-
-.weapon-icon svg {
-  width: 1.6rem;
-  height: 1.6rem;
-  fill: currentColor;
-}
-
-/* Hover shows the logo in its real colour */
-.weapon-item:hover .weapon-icon {
-  color: var(--brand);
-  border-color: var(--brand);
-  box-shadow: 0 0 18px color-mix(in srgb, var(--brand) 45%, transparent);
-}
-
-.weapon-item-name {
-  display: block;
-  font-family: var(--font-heading);
-  font-size: 1.2rem;
-  font-weight: 700;
-  line-height: 1.3;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.weapon-item p {
-  margin: 0;
-  color: #9db3a7;
-  font-size: 0.92rem;
-  line-height: 1.45;
-}
-
-/* Attachments: add-ons under a weapon */
-.attachments {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  margin: 0.6rem 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.attachments li {
-  padding: 0.1rem 0.55rem;
-  color: #d7efe2;
-  font-family: var(--font-heading);
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  background-color: rgba(0, 178, 107, 0.1);
-  border: 1px solid rgba(0, 178, 107, 0.45);
-}
-
-.attachments li::before {
-  content: "+";
-  margin-right: 0.3rem;
-  color: var(--green-bright);
-}
-
-/* Equipment and Perks: light panels with green corner brackets */
-.kit-panel {
-  position: relative;
-  height: 100%;
-  padding: 1.75rem;
-  background-color: var(--surface);
-  border: 1px solid var(--border);
-}
-
-.kit-panel::before,
-.kit-panel::after {
-  content: "";
-  position: absolute;
-  width: 18px;
-  height: 18px;
-  border-color: var(--green);
-  border-style: solid;
-}
-
-.kit-panel::before {
-  top: -1px;
-  left: -1px;
-  border-width: 3px 0 0 3px;
-}
-
-.kit-panel::after {
-  right: -1px;
-  bottom: -1px;
-  border-width: 0 3px 3px 0;
-}
-
-.kit-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 1rem;
-  margin-bottom: 1.25rem;
-}
-
-.kit-title {
-  margin: 0;
-  font-family: "Archivo", var(--font-heading);
-  font-size: clamp(1.4rem, 3vw, 1.75rem);
-  font-style: italic;
-  font-stretch: 125%;
-  font-weight: 900;
-  letter-spacing: 0;
-}
-
-.kit-count {
-  color: var(--green);
-  font-family: var(--font-heading);
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-/* Equipment: inventory slots */
-.tool-grid {
-  --cols: 3;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;   /* centres the last, shorter row */
-  gap: 0.75rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-@media (min-width: 576px) {
-  .tool-grid {
-    --cols: 4;
-  }
-}
-
-.tool {
-  --brand: var(--green);
-  flex: 0 0 calc((100% - (var(--cols) - 1) * 0.75rem) / var(--cols));
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.55rem;
-  min-height: 6.5rem;
-  padding: 0.9rem 0.4rem;
-  color: var(--heading);
-  font-family: var(--font-heading);
-  font-size: 0.9rem;
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: 0.05em;
-  text-align: center;
-  text-transform: uppercase;
-  background-color: #fff;
-  border: 1px solid var(--border);
-  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-}
-
-.tool svg {
-  width: 1.9rem;
-  height: 1.9rem;
-  fill: currentColor;
-  transition: color 0.25s ease;
-}
-
-.tool:hover {
-  border-color: var(--green);
-  box-shadow: 0 10px 22px rgba(13, 26, 19, 0.1);
-  transform: translateY(-4px);
-}
-
-.tool:hover svg {
-  color: var(--brand);
-}
-
-/* Perks */
-.perk-list {
-  display: grid;
-  gap: 1.25rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.perk {
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-}
-
-/* Hexagon badge, like a perk icon in a game */
-.perk-badge {
-  display: grid;
-  flex: none;
-  place-items: center;
-  width: 3.2rem;
-  height: 3.6rem;
-  color: #fff;
-  background: linear-gradient(160deg, var(--green-bright), var(--green-dark));
-  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
-  transition: transform 0.25s ease;
-}
-
-.perk-badge svg {
-  width: 1.5rem;
-  height: 1.5rem;
-}
-
-.perk:hover .perk-badge {
-  transform: scale(1.08);
-}
-
-.perk-num {
-  display: block;
-  color: var(--green);
-  font-family: var(--font-heading);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-}
-
-.perk-name {
-  display: block;
-  color: var(--heading);
-  font-family: var(--font-heading);
-  font-size: 1.2rem;
-  font-weight: 700;
-  line-height: 1.25;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.perk p {
-  margin: 0.2rem 0 0;
-  font-size: 0.95rem;
-  line-height: 1.5;
-}
-
-/* "Equip" sequence: each panel's items slide in one after another when it scrolls
-   into view. main.js adds .will-equip, so without JavaScript everything just shows */
-.will-equip .equip-item,
-.will-equip .equipped-tag {
-  opacity: 0;
-}
-
-.equipped .equip-item {
-  animation: equip 0.5s ease-out both;
-  animation-delay: calc(0.15s + var(--i, 0) * 0.08s);
-}
-
-/* Each weapon flashes green as it's equipped */
-.equipped .weapon-item::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-color: rgba(0, 178, 107, 0.3);
-  pointer-events: none;
-  animation: equip-flash 0.7s ease-out both;
-  animation-delay: inherit;
-}
-
-.equipped .equipped-tag {
-  animation: stamp 0.4s cubic-bezier(0.3, 1.6, 0.6, 1) 0.75s both;
-}
-
-/* Uses translate (not transform) so the hover lift on the tiles still works */
-@keyframes equip {
-  from { opacity: 0; translate: -20px 0; }
-  to   { opacity: 1; translate: 0 0; }
-}
-
-@keyframes equip-flash {
-  from { opacity: 1; }
-  to   { opacity: 0; }
-}
-
-@keyframes stamp {
-  from { opacity: 0; transform: scale(1.8); }
-  to   { opacity: 1; transform: scale(1); }
-}
-
-@media (max-width: 575.98px) {
-  .weapon-card,
-  .kit-panel {
-    padding: 1.25rem;
-  }
-
-  .weapon-item {
-    gap: 0.85rem;
-    padding-inline: 0.5rem;
-  }
-
-  .tool {
-    font-size: 0.8rem;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .tool:hover {
-    transform: none;
-  }
-}
-
-/* ===== Services: mission select ===== */
-.services {
-  background-color: var(--surface);
-}
-
-/* Mission cards */
-.mission-card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  padding: 1.75rem 1.5rem 1.5rem;
-  background-color: #fff;
-  border: 1px solid var(--border);
-  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* Green bar along the top: short at rest, full width when the mission is selected */
-.mission-card::before {
-  content: "";
-  position: absolute;
-  top: -1px;
-  left: -1px;
-  width: calc(100% + 2px);
-  height: 4px;
-  background-color: var(--green);
-  transform: scaleX(0.2);
-  transform-origin: left;
-  transition: transform 0.35s ease;
-}
-
-.mission-card:hover,
-.mission-card:focus-within {
-  border-color: var(--green);
-  box-shadow: 0 18px 40px rgba(13, 26, 19, 0.12);
-  transform: translateY(-6px);
-}
-
-.mission-card:hover::before,
-.mission-card:focus-within::before {
-  transform: scaleX(1);
-}
-
-.mission-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.25rem;
-}
-
-.mission-num {
-  color: var(--green);
-  font-family: var(--font-heading);
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-}
-
-.mission-icon {
-  width: 2.25rem;
-  height: 2.25rem;
-  color: var(--green);
-}
-
-.mission-name {
-  margin-bottom: 0.6rem;
-  font-family: "Archivo", var(--font-heading);
-  font-size: 1.35rem;
-  font-style: italic;
-  font-stretch: 125%;
-  font-weight: 900;
-  line-height: 1.15;
-  letter-spacing: 0;
-}
-
-.mission-brief {
-  color: var(--text-muted);
-  font-size: 0.95rem;
-}
-
-.mission-label {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  margin-bottom: 0.4rem;
-  color: var(--heading);
-  font-family: var(--font-heading);
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-}
-
-/* Thin line from the label to the card edge */
-.mission-label::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background-color: var(--border);
-}
-
-.mission-list {
-  margin: 0 0 1.5rem;
-  padding: 0;
-  list-style: none;
-}
-
-.mission-list li {
-  position: relative;
-  padding: 0.3rem 0 0.3rem 1.25rem;
-  font-size: 0.95rem;
-}
-
-/* Small green diamond bullets */
-.mission-list li::before {
-  content: "";
-  position: absolute;
-  top: 0.84rem;
-  left: 0.15rem;
-  width: 0.45rem;
-  height: 0.45rem;
-  background-color: var(--green);
-  transform: rotate(45deg);
-}
-
-.mission-btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: auto;   /* buttons line up along the bottom of every card */
-  padding: 0.7rem 1rem;
-  color: var(--green);
-  font-family: var(--font-heading);
-  font-size: 0.95rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-decoration: none;
-  text-transform: uppercase;
-  border: 2px solid var(--green);
-  border-radius: 2px;
-  transition: color 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
-}
-
-.mission-btn svg {
-  width: 1.1rem;
-  height: 1.1rem;
-  transition: transform 0.25s ease;
-}
-
-.mission-card:hover .mission-btn,
-.mission-btn:focus-visible {
-  color: #fff;
-  background-color: var(--green);
-}
-
-.mission-btn:hover {
-  color: #fff;
-  background-color: var(--green-dark);
-  border-color: var(--green-dark);
-}
-
-.mission-card:hover .mission-btn svg {
-  transform: translateX(4px);
-}
-
-.mission-btn:focus-visible {
-  outline: 3px solid rgba(0, 135, 81, 0.35);
-  outline-offset: 2px;
-}
-
-/* How I work: four stages joined by a dashed track */
-.process {
-  margin-top: 4.5rem;
-}
-
-.process .kit-title {
-  margin-bottom: 2rem;
-}
-
-.process-steps {
-  display: grid;
-  gap: 1.5rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.process-step {
-  position: relative;
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-}
-
-/* Diamond node with the stage number */
-.step-node {
-  display: grid;
-  flex: none;
-  place-items: center;
-  width: 3.25rem;
-  height: 3.25rem;
-  color: #fff;
-  background-color: var(--green);
-  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
-  font-family: var(--font-heading);
-  font-size: 1rem;
-  font-weight: 700;
-  transition: background-color 0.25s ease;
-}
-
-.process-step:hover .step-node {
-  background-color: var(--charcoal);
-}
-
-.step-name {
-  display: block;
-  color: var(--heading);
-  font-family: var(--font-heading);
-  font-size: 1.25rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.process-step p {
-  margin: 0.2rem 0 0;
-  color: var(--text-muted);
-  font-size: 0.95rem;
-}
-
-/* The track runs down on phones and tablets, and across on desktops */
-.process-step:not(:last-child)::after {
-  content: "";
-  position: absolute;
-  top: 3.75rem;
-  bottom: -1rem;
-  left: calc(1.625rem - 1px);
-  width: 2px;
-  background-image: repeating-linear-gradient(180deg, var(--green) 0 6px, transparent 6px 11px);
-  transform-origin: top;
-}
-
-@media (min-width: 992px) {
-  .process-steps {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  .process-step {
-    flex-direction: column;
-  }
-
-  .process-step:not(:last-child)::after {
-    top: calc(1.625rem - 1px);
-    right: -1rem;
-    bottom: auto;
-    left: 3.75rem;
-    width: auto;
-    height: 2px;
-    background-image: repeating-linear-gradient(90deg, var(--green) 0 6px, transparent 6px 11px);
-    transform-origin: left;
-  }
-}
-
-/* GitHub call-to-action */
-.github-card {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 1.5rem 2rem;
-  margin-top: 4.5rem;
-  padding: 2rem 3rem 2rem 2rem;   /* extra on the right clears the corner brackets */
-  box-shadow: 0 18px 40px rgba(13, 26, 19, 0.16);
-}
-
-.github-mark {
-  flex: none;
-  width: 4rem;
-  height: 4rem;
-  fill: currentColor;
-}
-
-.github-text {
-  flex: 1 1 20rem;
-}
-
-.github-label {
-  margin-bottom: 0.25rem;
-  color: var(--green-bright);
-  font-family: var(--font-heading);
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-}
-
-.github-title {
-  margin-bottom: 0.4rem;
-  color: #fff;
-  font-family: "Archivo", var(--font-heading);
-  font-size: clamp(1.5rem, 3vw, 2rem);
-  font-style: italic;
-  font-stretch: 125%;
-  font-weight: 900;
-  letter-spacing: 0;
-}
-
-.github-text p:last-child {
-  margin: 0;
-  color: #9db3a7;
-}
-
-.btn-github {
-  --bs-btn-padding-x: 1.75rem;
-  --bs-btn-padding-y: 0.8rem;
-  --bs-btn-color: var(--charcoal);
-  --bs-btn-bg: #fff;
-  --bs-btn-border-color: #fff;
-  --bs-btn-hover-color: var(--charcoal);
-  --bs-btn-hover-bg: var(--green-bright);
-  --bs-btn-hover-border-color: var(--green-bright);
-  --bs-btn-active-color: var(--charcoal);
-  --bs-btn-active-bg: var(--green-bright);
-  --bs-btn-active-border-color: var(--green-bright);
-  --bs-btn-border-width: 2px;
-  --bs-btn-border-radius: 2px;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-family: var(--font-heading);
-  font-size: 1.05rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.btn-github svg {
-  width: 1.1rem;
-  height: 1.1rem;
-}
-
-.btn-github:focus-visible {
-  outline: 3px solid var(--green-bright);
-  outline-offset: 3px;
-  box-shadow: none;
-}
-
-@media (max-width: 575.98px) {
-  .github-card {
-    padding: 1.75rem 1.5rem;
-  }
-
-  .btn-github {
-    justify-content: center;
-    width: 100%;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .mission-card:hover,
-  .mission-card:focus-within {
-    transform: none;
-  }
-}
-
-/* ===== Contact: the green band at the bottom ===== */
+/* ===== Contact ===== */
 .contact .section-label,
 .contact .section-title {
   color: #fff;
 }
 
 .contact .section-label::before {
-  background: linear-gradient(90deg, #7be0b0 0 33.3%, #fff 33.3% 66.6%, #7be0b0 66.6%);
+  background: linear-gradient(
+    90deg,
+    #7be0b0 0 33.3%,
+    #fff 33.3% 66.6%,
+    #7be0b0 66.6%
+  );
 }
 
 .contact .section-lead {
   color: rgba(255, 255, 255, 0.85);
 }
 
-/* Shows which service was picked with a "Start mission" button */
+/* Selected-service indicator (toggled by main.js) */
 .mission-chip {
   display: inline-flex;
   align-items: center;
@@ -1887,14 +2085,20 @@ a:hover {
 }
 
 @keyframes chip-in {
-  from { opacity: 0; transform: translateY(-8px); }
-  to   { opacity: 1; transform: none; }
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
-/* WhatsApp and email cards: dark HUD panels on the green */
+/* Contact cards */
 .contact-card {
   height: 100%;
-  padding: 1.75rem 2.75rem 1.75rem 1.75rem;   /* extra on the right clears the corner brackets */
+  padding: 1.75rem 2.75rem 1.75rem 1.75rem; /* right padding clears the corner brackets */
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
 }
 
@@ -1962,7 +2166,10 @@ a:hover {
   background-color: transparent;
   border: 1px solid rgba(255, 255, 255, 0.35);
   border-radius: 2px;
-  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .copy-btn svg {
@@ -1987,15 +2194,21 @@ a:hover {
   gap: 0.75rem;
 }
 
-/* On the dark cards the button pulses neon green instead of white */
+/* Green pulse variant for dark cards */
 .contact-card .btn-start {
   animation-name: pulse-green;
 }
 
 @keyframes pulse-green {
-  0%   { box-shadow: 0 0 0 0 rgba(0, 178, 107, 0.6); }
-  70%  { box-shadow: 0 0 0 14px rgba(0, 178, 107, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(0, 178, 107, 0); }
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 178, 107, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 14px rgba(0, 178, 107, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 178, 107, 0);
+  }
 }
 
 .contact-actions .btn svg {
@@ -2036,7 +2249,10 @@ a:hover {
   text-decoration: none;
   border: 2px solid rgba(255, 255, 255, 0.6);
   border-radius: 2px;
-  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .social-link svg {
@@ -2057,14 +2273,7 @@ a:hover {
   outline-offset: 3px;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .mission-chip,
-  .contact-card .btn-start {
-    animation: none;
-  }
-}
-
-/* ===== Footer: closes the green band ===== */
+/* ===== Footer ===== */
 .site-footer {
   padding: 3rem 0 2rem;
   color: rgba(255, 255, 255, 0.75);
@@ -2087,10 +2296,14 @@ a:hover {
   text-decoration: none;
 }
 
-/* Lighter green chrome so the logo shows up on the dark green */
+/* Lighter chrome fill for the dark background */
 .footer-logo .logo-text {
-  background-image:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.15)),
+  background-image: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.35),
+      rgba(255, 255, 255, 0) 50%,
+      rgba(0, 0, 0, 0.15)
+    ),
     linear-gradient(90deg, #7be0b0 15%, #ffffff 50%, #7be0b0 85%);
 }
 
@@ -2119,7 +2332,10 @@ a:hover {
   color: #fff;
   border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 2px;
-  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .footer-links a:hover,
@@ -2175,8 +2391,23 @@ a:hover {
   transform: translateY(-3px);
 }
 
-/* ===== Sections ===== */
-header,
-section {
-  padding: 5rem 0;
+/* ===== Reduced motion ===== */
+@media (prefers-reduced-motion: reduce) {
+  .hero-content > *,
+  .btn-start,
+  .contact-card .btn-start,
+  .scroll-cue,
+  .typed-cursor,
+  .status-dot,
+  .neon-green,
+  .mission-chip {
+    animation: none;
+  }
+
+  .tool:hover,
+  .mission-card:hover,
+  .mission-card:focus-within,
+  .clock-card:hover img {
+    transform: none;
+  }
 }
